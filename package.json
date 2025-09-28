@@ -1,0 +1,29 @@
+{
+  "type": "module",
+  "devDependencies": {
+    "@cucumber/cucumber": "^10.9.0",
+    "@wdio/allure-reporter": "^9.15.0",
+    "@wdio/cli": "^8.44.1",
+    "@wdio/cucumber-framework": "^9.15.0",
+    "@wdio/local-runner": "^9.19.2",
+    "@wdio/mocha-framework": "^9.19.2",
+    "@wdio/spec-reporter": "^9.19.2",
+    "@wdio/visual-service": "^9.0.0",
+    "allure-commandline": "^2.34.0",
+    "chai": "^5.2.0",
+    "chromedriver": "^139.0.0",
+    "cross-env": "^10.0.0",
+    "npm-run-all": "^4.1.5",
+    "typescript": "^5.9.2",
+    "wdio-chromedriver-service": "^8.1.1",
+    "webdriverio": "^8.44.1"
+  },
+  "scripts": {
+    "test": "wdio run  ./projects/autotests-for-magento-2-demo/config/wdio.conf.js",
+    "test:baseurl": "cross-env BASE_URL=https://magento2demo.firebearstudio.com/ wdio run ./projects/autotests-for-magento-2-demo/config/wdio.conf.js",
+    "allure:generate": "allure generate ./projects/autotests-for-magento-2-demo/allure-results --clean -o ./projects/autotests-for-magento-2-demo/allure-report",
+    "allure:open": "allure open ./projects/autotests-for-magento-2-demo/allure-report",
+    "allure:clean": "rm -rf ./projects/autotests-for-magento-2-demo/allure-results ./projects/autotests-for-magento-2-demo/allure-report",
+    "test-and-allure": "npm-run-all --continue-on-error --serial test:baseurl allure:generate allure:open"
+  }
+}

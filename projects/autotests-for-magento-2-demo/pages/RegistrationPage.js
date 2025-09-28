@@ -1,0 +1,132 @@
+import BasePage from "../../../src/core/BasePage.js";
+import {
+  Button,
+  Input,
+  Checkbox,
+  Label,
+  Link,
+  Dropdown,
+} from "../../../src/core/elements/index.js";
+import { registrationPageSelectors } from "./selectors/selectors.js";
+import BaseElement from "../../../src/core/BaseElement.js";
+
+class RegistrationPage extends BasePage {
+  // Page Elements
+  constructor() {
+    super(
+      new Label(
+        registrationPageSelectors.registrationPageTitle,
+        "Registration page title"
+      ),
+      "Create New Customer Account"
+    );
+  }
+
+  get firstNameField() {
+    return new Input(
+      registrationPageSelectors.firstNameField,
+      "First name field"
+    );
+  }
+
+  get lastNameField() {
+    return new Input(
+      registrationPageSelectors.lastNameField,
+      "Last name field"
+    );
+  }
+
+  get emailField() {
+    return new Input(registrationPageSelectors.emailField, "Email field");
+  }
+
+  get passwordField() {
+    return new Input(registrationPageSelectors.passwordField, "Password field");
+  }
+
+  get confirmPasswordField() {
+    return new Input(
+      registrationPageSelectors.confirmPasswordField,
+      "Confirm password field"
+    );
+  }
+
+  get newsletterCheckbox() {
+    return new Checkbox(
+      registrationPageSelectors.newsletterCheckbox,
+      "Newsletter checkbox"
+    );
+  }
+
+  get remoteShoppingCheckbox() {
+    return new Checkbox(
+      registrationPageSelectors.remoteShoppingCheckbox,
+      "Remote shopping checkbox"
+    );
+  }
+
+  get showPasswordCheckbox() {
+    return new Checkbox(
+      registrationPageSelectors.showPasswordCheckbox,
+      "Show password checkbox"
+    );
+  }
+
+  get createAccountButton() {
+    return new Button(
+      registrationPageSelectors.createAnAccountButton,
+      "Create Account Button"
+    );
+  }
+  get topErrorMessage() {
+    return new Label(
+      registrationPageSelectors.topErrorMessage,
+      "Top error message"
+    );
+  }
+
+  // Actions
+
+  async verifyTopErrorMessage(expected) {
+    const actual = await this.topErrorMessage.getText();
+    await this.verifyText(actual, expected);
+  }
+
+  async enterFirstName(firstName) {
+    await this.firstNameField.typeText(firstName);
+  }
+
+  async enterLastName(lastName) {
+    await this.lastNameField.typeText(lastName);
+  }
+
+  async enterEmail(email) {
+    await this.emailField.typeText(email);
+  }
+
+  async enterPassword(password) {
+    await this.passwordField.typeText(password);
+  }
+
+  async enterConfirmPassword(password) {
+    await this.confirmPasswordField.typeText(password);
+  }
+
+  async clickNewsletter() {
+    await this.newsletterCheckbox.click();
+  }
+
+  async clickRemoteShopping() {
+    await this.remoteShoppingCheckbox.click();
+  }
+
+  async clickShowPassword() {
+    await this.showPasswordCheckbox.click();
+  }
+
+  async clickCreateAccount() {
+    await this.createAccountButton.click();
+  }
+}
+
+export default new RegistrationPage();

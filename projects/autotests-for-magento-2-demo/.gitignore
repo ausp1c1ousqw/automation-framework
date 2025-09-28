@@ -1,0 +1,6 @@
+.env
+allure-report/
+allure-results/
+*.log
+pages/NavigationComponent.js
+pages/MyAccountPage.js

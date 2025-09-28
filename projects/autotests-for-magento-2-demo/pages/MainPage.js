@@ -1,0 +1,25 @@
+import BasePage from "../../../src/core/BasePage.js";
+import {
+  Button,
+  Input,
+  Checkbox,
+  Label,
+  Link,
+  Dropdown,
+} from "../../../src/core/elements/index.js";
+import { urls } from "../config/urls.js";
+import { mainPageSelectors } from "./selectors/selectors.js";
+
+class MainPage extends BasePage {
+  constructor() {
+    super(
+      new Label(mainPageSelectors.pageTitle, "Main page title"),
+      "Welcome to FireBear Studio Magento 2 demo"
+    );
+  }
+
+  async open() {
+    await this.navigateTo(urls.mainPage);
+  }
+}
+export default new MainPage();
