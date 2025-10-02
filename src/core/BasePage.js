@@ -1,43 +1,32 @@
 import * as pageHelpers from "./helpers.js";
 import { expect } from "chai";
 class BasePage {
-  constructor(mainEl, expectedText) {
+  constructor(pageURL, mainEl, expectedTextOfMainEl) {
+    this.pageURL = pageURL;
     this.mainEl = mainEl;
-    this.expectedText = expectedText;
+    this.expectedTextOfMainEl = expectedTextOfMainEl;
   }
 
-  async navigateTo(path) {
-    const url = await pageHelpers.doAction(
-      async () => {
-        return await pageHelpers.buildUrl(path);
-      },
-      `Building full URL for path: '${path}'`,
-      "Navigation"
-    );
-    await pageHelpers.doAction(
-      async () => {
-        await browser.url(url);
-        await this.verifyPageOpened();
-      },
-      `Navigating to the ${url}`,
-      "Navigation"
-    );
+  async open() {
+    await pageHelpers.navigateTo(this.pageURL);
+    await pageHelpers.waitForDocumentReadyState();
+    await this.verifyPageMainElement();
   }
-  async verifyPageOpened() {
-    await pageHelpers.waitForDocumentReady();
+
+  async verifyPageMainElement() {
     await this.mainEl.waitForDisplayed();
-    const actual = await this.mainEl.getText();
-    await this.verifyText(actual, this.expectedText);
-  }
-
-  async verifyText(actualText, expectedText) {
-    await pageHelpers.doAction(
-      async () => {
-        expect(actualText).to.equal(expectedText);
-      },
-      `Compare actual: '${actualText}' to expected: '${expectedText}'`,
-      "Comparing"
+    const actualText = await this.mainEl.getText();
+    await pageHelpers.assertTextsWithLogging(
+      actualText,
+      this.expectedText,
+      `Verifying main element of the page: ${this.mainEl.name}`
     );
   }
+
+  async refresh() {}
+  async back() {}
+  async forward() {}
+  async switchToFrame() {}
+  async switchToWindow() {}
 }
 export default BasePage;

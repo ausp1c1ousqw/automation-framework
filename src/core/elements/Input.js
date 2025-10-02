@@ -4,9 +4,9 @@ class Input extends BaseElement {
   constructor(elementOrLocator, name) {
     super(elementOrLocator, name, "Input");
   }
-  async typeText(text) {
+  async type(text) {
     await this.waitForDisplayed();
-    await this.clearValue();
+    await this.clear();
     await this.setValue(text);
     const value = await this.getValue();
     if (value !== text) {
