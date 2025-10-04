@@ -1,4 +1,4 @@
-import * as pageHelpers from "./helpers.js";
+import * as utils from "./utils.js";
 import { TIMEOUTS } from "../configs/timeouts.js";
 import Logger from "./Logger.js";
 import allure from "@wdio/allure-reporter";
@@ -12,10 +12,7 @@ class BaseElement {
   async performActionWithLogging(action, message) {
     const el = await this.getEl();
     const fullMessage = `${this.type} '${this.name}' :: ${message}`;
-    return await pageHelpers.performActionWithLogging(
-      () => action(el),
-      fullMessage
-    );
+    return await utils.performActionWithLogging(() => action(el), fullMessage);
   }
 
   async getEl() {
@@ -59,12 +56,9 @@ class BaseElement {
   }
 
   async JSClickOnError(el, error) {
-    Logger.warn(
-      `${this.type} '${this.name}' :: JS fallback click due to error: ${error.message}`
-    );
-    allure.step(
-      `${this.type} '${this.name}' :: JS fallback click due to error: ${error.message}`
-    );
+    const message = `${this.type} '${this.name}' :: JS fallback click due to error: ${error.message}`;
+    Logger.warn(message);
+    allure.step(message);
     await browser.execute((el) => el.click(), el);
   }
 

@@ -1,4 +1,5 @@
 import BasePage from "../../../src/core/BasePage.js";
+import * as pageHelpers from "../../../src/core/pageHelpers.js";
 import {
   Button,
   Input,
@@ -8,10 +9,8 @@ import {
   Dropdown,
 } from "../../../src/core/elements/index.js";
 import { registrationPageSelectors } from "./selectors/selectors.js";
-import BaseElement from "../../../src/core/BaseElement.js";
 
 class RegistrationPage extends BasePage {
-  // Page Elements
   constructor() {
     super(
       new Label(
@@ -85,11 +84,9 @@ class RegistrationPage extends BasePage {
     );
   }
 
-  // Actions
-
-  async verifyTopErrorMessage(expected) {
-    const actual = await this.topErrorMessage.getText();
-    await this.verifyText(actual, expected);
+  async verifyTopErrorMessage(expectedError) {
+    const actualError = await this.topErrorMessage.getText();
+    await pageHelpers.assertTextsWithLogging(actualError, expectedError);
   }
 
   async enterFirstName(firstName) {

@@ -19,7 +19,7 @@ export async function performActionWithLogging(action, logMessage) {
   }
 }
 
-export async function perfomActionsOnError(error) {
+async function perfomActionsOnError(error) {
   Logger.error(error.message);
   allure.endStep("failed");
 
@@ -28,7 +28,7 @@ export async function perfomActionsOnError(error) {
 }
 
 export async function waitForDocumentReadyState(timeout = TIMEOUTS.medium) {
-  await this.performActionWithLogging(async () => {
+  await performActionWithLogging(async () => {
     await browser.waitUntil(
       async () =>
         (await browser.execute(() => document.readyState)) === "complete",
@@ -39,7 +39,7 @@ export async function waitForDocumentReadyState(timeout = TIMEOUTS.medium) {
 
 export async function navigateTo(path) {
   const fullUrl = await performActionWithLogging(() => {
-    buildUrl(path);
+    return buildUrl(path);
   }, `Build full URL from path: ${path}`);
 
   await performActionWithLogging(async () => {
@@ -47,7 +47,7 @@ export async function navigateTo(path) {
   }, `Navigate to: "${fullUrl}"`);
 }
 
-export async function buildUrl(path) {
+async function buildUrl(path) {
   const baseUrl = config.baseUrl;
   const url = path.startsWith("http")
     ? path

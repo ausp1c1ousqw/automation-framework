@@ -1,4 +1,5 @@
 import BasePage from "../../../src/core/BasePage.js";
+import * as pageHelpers from "../../../src/core/pageHelpers.js";
 import {
   Button,
   Input,
@@ -16,7 +17,6 @@ class SignInPage extends BasePage {
       "Customer Login"
     );
   }
-  // Page Elements
 
   get emailField() {
     return new Input(signInPageSelectors.emailField, "Email field");
@@ -34,8 +34,6 @@ class SignInPage extends BasePage {
     return new Label(signInPageSelectors.topErrorMessage, "Top error message");
   }
 
-  // Actions
-
   async enterEmail(email) {
     await this.emailField.typeText(email);
   }
@@ -48,9 +46,9 @@ class SignInPage extends BasePage {
     await this.signInButton.click();
   }
 
-  async verifyTopErrorMessage(expected) {
-    const actual = await this.topErrorMessage.getText();
-    await this.verifyText(actual, expected);
+  async verifyTopErrorMessage(expectedError) {
+    const actualError = await this.topErrorMessage.getText();
+    await pageHelpers.assertTextsWithLogging(actualError, expectedError);
   }
 }
 

@@ -1,4 +1,5 @@
 import BasePage from "../../../src/core/BasePage.js";
+import * as pageHelpers from "../../../src/core/pageHelpers.js";
 import {
   Button,
   Input,

@@ -1,5 +1,5 @@
-import * as pageHelpers from "./helpers.js";
-import { expect } from "chai";
+import * as pageHelpers from "./pageHelpers.js";
+import * as utils from "./utils.js";
 class BasePage {
   constructor(pageURL, mainEl, expectedTextOfMainEl) {
     this.pageURL = pageURL;
@@ -8,8 +8,8 @@ class BasePage {
   }
 
   async open() {
-    await pageHelpers.navigateTo(this.pageURL);
-    await pageHelpers.waitForDocumentReadyState();
+    await utils.navigateTo(this.pageURL);
+    await utils.waitForDocumentReadyState();
     await this.verifyPageMainElement();
   }
 

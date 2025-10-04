@@ -1,4 +1,4 @@
-import BasePage from "../../../src/core/BasePage.js";
+import * as pageHelpers from "../../../src/core/pageHelpers.js";
 import {
   Button,
   Input,
@@ -9,7 +9,7 @@ import {
 } from "../../../src/core/elements/index.js";
 import { headerSelectors } from "./selectors/selectors.js";
 
-class HeaderComponent extends BasePage {
+class HeaderComponent {
   get signInLink() {
     return new Link(headerSelectors.signInLink, "SignIn Link");
   }
@@ -26,9 +26,13 @@ class HeaderComponent extends BasePage {
   async clickCreateAccountLink() {
     await this.createAccountLink.click();
   }
-  async verifyWelcomeMessage(expected) {
-    const actual = await this.welcomeMessage.getText();
-    await this.verifyText(actual, expected);
+  async verifyWelcomeMessage(expectedMessage) {
+    const actualMessage = await this.welcomeMessage.getText();
+    await pageHelpers.assertTextsWithLogging(
+      actualMessage,
+      expectedMessage,
+      `Assert actual Welcome message: ${actualMessage} with expected: ${expectedMessage}`
+    );
   }
 }
 export default new HeaderComponent();
