@@ -1,6 +1,6 @@
 import allure from "@wdio/allure-reporter";
 import Logger from "./Logger.js";
-import fs from "fs";
+import { writeFile } from "fs/promises";
 import { config } from "../../projects/autotests-for-magento-2-demo/config/wdio.conf.js";
 import path from "path";
 
@@ -10,42 +10,55 @@ class DebugHelper {
     this.screenshotsDir = path.join(this.debugDir, "screenshots");
     this.pageSourceDir = path.join(this.debugDir, "page_sources");
   }
+
   async takeScreenshot() {
     try {
       const screenshot = await browser.takeScreenshot();
 
-      const filePath = path.join(
-        this.screenshotsDir,
-        `screenshot_${Date.now()}.png`
-      );
-      await fs.writeFile(filePath, screenshot, "base64");
+      await this.saveScreenshot(screenshot, this.screenshotsDir);
 
-      allure.addAttachment(
-        "Screenshot",
-        Buffer.from(screenshot, "base64"),
-        "image/png"
-      );
-      Logger.info(`Saved screenshot: ${filePath}`);
+      this.attachScreenshotToAllure(screenshot);
     } catch (e) {
       Logger.warn(`Failed to take screenshot due to error: ${e.message}`);
     }
+  }
+
+  async saveScreenshot(screenshot, pathOfDir) {
+    const filePath = path.join(pathOfDir, `screenshot_${Date.now()}.png`);
+    await writeFile(filePath, screenshot, "base64");
+
+    Logger.info(`Saved screenshot: ${filePath}`);
+  }
+
+  attachScreenshotToAllure(screenshot) {
+    allure.addAttachment(
+      "Screenshot",
+      Buffer.from(screenshot, "base64"),
+      "image/png"
+    );
   }
 
   async getPageSource() {
     try {
       const pageSource = await browser.getPageSource();
 
-      const filePath = path.join(
-        this.pageSourceDir,
-        `page_source_${Date.now()}.html`
-      );
-      await fs.writeFile(filePath, pageSource, "utf-8");
+      await this.savePageSource(pageSource, this.pageSourceDir);
 
-      allure.addAttachment("Page source", pageSource, "text/html");
-      Logger.info(`Saved page source: ${filePath}`);
+      this.attachPageSourceToAllure(pageSource);
     } catch (e) {
       Logger.warn(`Failed to save page source due to error: ${e.message}`);
     }
+  }
+
+  async savePageSource(pageSource, pageSourceDir) {
+    const filePath = path.join(pageSourceDir, `page_source_${Date.now()}.html`);
+    await writeFile(filePath, pageSource, "utf-8");
+
+    Logger.info(`Saved page source: ${filePath}`);
+  }
+
+  attachPageSourceToAllure(pageSource) {
+    allure.addAttachment("Page source", pageSource, "text/html");
   }
 }
 export default new DebugHelper();
