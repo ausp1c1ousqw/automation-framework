@@ -1,38 +1,21 @@
-import BasePage from "../../../src/core/BasePage.js";
-import * as pageHelpers from "../../../src/core/pageHelpers.js";
-import {
-  Button,
-  Input,
-  Checkbox,
-  Label,
-  Link,
-  Dropdown,
-} from "../../../src/core/elements/index.js";
+import { urls } from "../config/urls.js";
 import { registrationPageSelectors } from "./selectors/selectors.js";
 
 class RegistrationPage extends BasePage {
   constructor() {
     super(
-      new Label(
-        registrationPageSelectors.registrationPageTitle,
-        "Registration page title"
-      ),
+      urls.signInPage,
+      new Label(registrationPageSelectors.registrationPageTitle, "Registration page title"),
       "Create New Customer Account"
     );
   }
 
   get firstNameField() {
-    return new Input(
-      registrationPageSelectors.firstNameField,
-      "First name field"
-    );
+    return new Input(registrationPageSelectors.firstNameField, "First name field");
   }
 
   get lastNameField() {
-    return new Input(
-      registrationPageSelectors.lastNameField,
-      "Last name field"
-    );
+    return new Input(registrationPageSelectors.lastNameField, "Last name field");
   }
 
   get emailField() {
@@ -44,17 +27,11 @@ class RegistrationPage extends BasePage {
   }
 
   get confirmPasswordField() {
-    return new Input(
-      registrationPageSelectors.confirmPasswordField,
-      "Confirm password field"
-    );
+    return new Input(registrationPageSelectors.confirmPasswordField, "Confirm password field");
   }
 
   get newsletterCheckbox() {
-    return new Checkbox(
-      registrationPageSelectors.newsletterCheckbox,
-      "Newsletter checkbox"
-    );
+    return new Checkbox(registrationPageSelectors.newsletterCheckbox, "Newsletter checkbox");
   }
 
   get remoteShoppingCheckbox() {
@@ -65,28 +42,24 @@ class RegistrationPage extends BasePage {
   }
 
   get showPasswordCheckbox() {
-    return new Checkbox(
-      registrationPageSelectors.showPasswordCheckbox,
-      "Show password checkbox"
-    );
+    return new Checkbox(registrationPageSelectors.showPasswordCheckbox, "Show password checkbox");
   }
 
   get createAccountButton() {
-    return new Button(
-      registrationPageSelectors.createAnAccountButton,
-      "Create Account Button"
-    );
+    return new Button(registrationPageSelectors.createAnAccountButton, "Create Account Button");
   }
+
   get topErrorMessage() {
-    return new Label(
-      registrationPageSelectors.topErrorMessage,
-      "Top error message"
-    );
+    return new Label(registrationPageSelectors.topErrorMessage, "Top error message");
   }
 
   async verifyTopErrorMessage(expectedError) {
     const actualError = await this.topErrorMessage.getText();
-    await pageHelpers.assertTextsWithLogging(actualError, expectedError);
+    await pageHelpers.assertTextsWithLogging(
+      actualError,
+      expectedError,
+      `Assert actual error message: '${actualError}' with expected: '${expectedError}'`
+    );
   }
 
   async enterFirstName(firstName) {

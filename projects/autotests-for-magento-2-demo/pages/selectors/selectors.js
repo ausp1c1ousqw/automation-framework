@@ -37,14 +37,11 @@ export const forgotPasswordPageSelectors = {
 
 export const myAccounPageSelectors = {
   myAccountPageTitle: `[data-ui-id="page-title-wrapper"]`,
-  editContactInfoLink:
-    "a[href='https://magento2demo.firebearstudio.com/customer/account/edit/']",
+  editContactInfoLink: "a[href='https://magento2demo.firebearstudio.com/customer/account/edit/']",
   changePasswordLink:
     "a[href='https://magento2demo.firebearstudio.com/customer/account/edit/changepass/1/']",
-  editNewslettersLink:
-    "a[href='https://magento2demo.firebearstudio.com/newsletter/manage/']",
-  manageAdressessLink:
-    "a[href='https://magento2demo.firebearstudio.com/customer/address/']",
+  editNewslettersLink: "a[href='https://magento2demo.firebearstudio.com/newsletter/manage/']",
+  manageAdressessLink: "a[href='https://magento2demo.firebearstudio.com/customer/address/']",
   editBillingAdressLink:
     "a[href='https://magento2demo.firebearstudio.com/customer/address/edit/id/1/']",
   editShippingAdressLink:

@@ -1,5 +1,5 @@
 import * as pageHelpers from "./pageHelpers.js";
-import * as utils from "./utils.js";
+import * as utils from "../utils/utils.js";
 class BasePage {
   constructor(pageURL, mainEl, expectedTextOfMainEl) {
     this.pageURL = pageURL;
@@ -9,23 +9,41 @@ class BasePage {
 
   async open() {
     await utils.navigateTo(this.pageURL);
+    await this.verifyPageOpened();
+  }
+  async verifyPageOpened() {
     await utils.waitForDocumentReadyState();
     await this.verifyPageMainElement();
   }
-
   async verifyPageMainElement() {
     await this.mainEl.waitForDisplayed();
     const actualText = await this.mainEl.getText();
     await pageHelpers.assertTextsWithLogging(
       actualText,
-      this.expectedText,
+      this.expectedTextOfMainEl,
       `Verifying main element of the page: ${this.mainEl.name}`
     );
   }
 
-  async refresh() {}
-  async back() {}
-  async forward() {}
+  async refresh() {
+    utils.performActionWithLogging(async () => {
+      await browser.refresh();
+    }, `Refreshing page`);
+    await this.verifyPageOpened();
+  }
+
+  async back() {
+    utils.performActionWithLogging(async () => {
+      await browser.back();
+    }, `Clicking back`);
+  }
+
+  async forward() {
+    utils.performActionWithLogging(async () => {
+      await browser.forward();
+    }, `Clicking forward`);
+  }
+
   async switchToFrame() {}
   async switchToWindow() {}
 }

@@ -1,14 +1,18 @@
 import allure from "@wdio/allure-reporter";
-import Logger from "./Logger.js";
 import { writeFile } from "fs/promises";
-import { config } from "../../projects/autotests-for-magento-2-demo/config/wdio.conf.js";
 import path from "path";
+import * as utils from "./utils.js";
 
 class DebugHelper {
-  constructor() {
-    this.debugDir = path.resolve(config.debugDir);
+  constructor(debugDir) {
+    this.debugDir = debugDir;
+    utils.ensureDirExists(this.debugDir);
+
     this.screenshotsDir = path.join(this.debugDir, "screenshots");
+    utils.ensureDirExists(this.screenshotsDir);
+
     this.pageSourceDir = path.join(this.debugDir, "page_sources");
+    utils.ensureDirExists(this.pageSourceDir);
   }
 
   async takeScreenshot() {
@@ -24,18 +28,15 @@ class DebugHelper {
   }
 
   async saveScreenshot(screenshot, pathOfDir) {
-    const filePath = path.join(pathOfDir, `screenshot_${Date.now()}.png`);
+    const fileName = utils.generateFileName("", "png");
+    const filePath = path.join(pathOfDir, fileName);
     await writeFile(filePath, screenshot, "base64");
 
     Logger.info(`Saved screenshot: ${filePath}`);
   }
 
   attachScreenshotToAllure(screenshot) {
-    allure.addAttachment(
-      "Screenshot",
-      Buffer.from(screenshot, "base64"),
-      "image/png"
-    );
+    allure.addAttachment("Screenshot", Buffer.from(screenshot, "base64"), "image/png");
   }
 
   async getPageSource() {
@@ -51,7 +52,8 @@ class DebugHelper {
   }
 
   async savePageSource(pageSource, pageSourceDir) {
-    const filePath = path.join(pageSourceDir, `page_source_${Date.now()}.html`);
+    const fileName = utils.generateFileName("", "html");
+    const filePath = path.join(pageSourceDir, fileName);
     await writeFile(filePath, pageSource, "utf-8");
 
     Logger.info(`Saved page source: ${filePath}`);
@@ -61,4 +63,4 @@ class DebugHelper {
     allure.addAttachment("Page source", pageSource, "text/html");
   }
 }
-export default new DebugHelper();
+export default DebugHelper;

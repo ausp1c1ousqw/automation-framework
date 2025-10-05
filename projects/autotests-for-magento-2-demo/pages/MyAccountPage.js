@@ -1,51 +1,52 @@
-import BasePage from "../../../src/core/BasePage.js";
-import {
-  Button,
-  Input,
-  Checkbox,
-  Label,
-  Link,
-  Dropdown,
-} from "../../../src/core/elements/index.js";
 import { myAccounPageSelectors } from "./selectors/selectors.js";
+
 class MyAccountPage extends BasePage {
-  // Page Elements
-  get pageTitle() {
-    return new ElementWrapper($(myAccounPageSelectors.myAccountPageTitle));
+  constructor() {
+    super(
+      new Label(myAccounPageSelectors.myAccountPageTitle, "My Account page title"),
+      "Customer Login"
+    );
   }
   get editContactInfoLink() {
-    return new ElementWrapper($(myAccounPageSelectors.editContactInfoLink));
-  }
-  get changePasswordLink() {
-    return new ElementWrapper($(myAccounPageSelectors.changePasswordLink));
-  }
-  get manageAdressessLink() {
-    return new ElementWrapper($(myAccounPageSelectors.manageAdressessLink));
-  }
-  get editBillingAdressLink() {
-    return new ElementWrapper($(myAccounPageSelectors.editBillingAdressLink));
-  }
-  get editShippingAdressLink() {
-    return new ElementWrapper($(myAccounPageSelectors.editShippingAdressLink));
-  }
-  get editNewsletterLink() {
-    return new ElementWrapper($(myAccounPageSelectors.editNewslettersLink));
+    return new Link(myAccounPageSelectors.editContactInfoLink, "Edit Contact Link");
   }
 
-  // Actions
+  get changePasswordLink() {
+    return new Link(myAccounPageSelectors.changePasswordLink, "Change Password Link");
+  }
+
+  get manageAdressesLink() {
+    return new Link(myAccounPageSelectors.manageAdressessLink, "Manage Adresses Link");
+  }
+
+  get editBillingAdressLink() {
+    return new Link(myAccounPageSelectors.editBillingAdressLink, "Edit Billing Adress Link");
+  }
+
+  get editShippingAdressLink() {
+    return new Link(myAccounPageSelectors.editShippingAdressLink, "Edit Shipping Adress Link");
+  }
+
+  get editNewsletterLink() {
+    return new Link(myAccounPageSelectors.editNewslettersLink, "Edit NewsLetter Link");
+  }
 
   async clickEditNewsletter() {
     await this.click(this.editNewsletterLink);
   }
+
   async clickEditContactInfo() {
     await this.click(this.editContactInfo);
   }
+
   async clickManageAdressess() {
-    await this.click(this.manageAdressessLink);
+    await this.click(this.manageAdressesLink);
   }
+
   async clickEditBillingAdress() {
     await this.click(this.editBillingAdressLink);
   }
+
   async clickEditShippingAdress() {
     await this.click(this.editShippingAdressLink);
   }

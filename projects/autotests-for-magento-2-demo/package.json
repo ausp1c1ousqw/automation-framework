@@ -1,0 +1,10 @@
+{
+  "scripts": {
+    "test": "cross-env BASE_URL=https://magento2demo.firebearstudio.com/ DEBUG_DIR=./artifacts wdio run  ./config/wdio.conf.js",
+    "allure:generate": "allure generate ./artifacts/allure-results --clean -o ./artifacts/allure-report",
+    "allure:open": "allure open ./artifacts/allure-report",
+    "allure:clean": "rm -rf ./artifacts/allure-results ./artifacts/allure-report",
+    "test-and-allure": "npm-run-all --continue-on-error --serial test allure:generate allure:open",
+    "artifacts:clean": "rm -rf ./artifacts"
+  }
+}

@@ -19,11 +19,7 @@
     "webdriverio": "^8.44.1"
   },
   "scripts": {
-    "test": "wdio run  ./projects/autotests-for-magento-2-demo/config/wdio.conf.js",
-    "test:baseurl": "cross-env BASE_URL=https://magento2demo.firebearstudio.com/ wdio run ./projects/autotests-for-magento-2-demo/config/wdio.conf.js",
-    "allure:generate": "allure generate ./projects/autotests-for-magento-2-demo/allure-results --clean -o ./projects/autotests-for-magento-2-demo/allure-report",
-    "allure:open": "allure open ./projects/autotests-for-magento-2-demo/allure-report",
-    "allure:clean": "rm -rf ./projects/autotests-for-magento-2-demo/allure-results ./projects/autotests-for-magento-2-demo/allure-report",
-    "test-and-allure": "npm-run-all --continue-on-error --serial test:baseurl allure:generate allure:open"
+    "test": "cd ./projects/autotests-for-magento-2-demo && npm run test-and-allure",
+    "clean": "cd ./projects/autotests-for-magento-2-demo && npm run artifacts:clean"
   }
 }

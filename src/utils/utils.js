@@ -1,8 +1,7 @@
 import allure from "@wdio/allure-reporter";
 import { TIMEOUTS } from "../configs/timeouts.js";
-import Logger from "./Logger.js";
-import { config } from "../../projects/autotests-for-magento-2-demo/config/wdio.conf.js";
-import DebugHelper from "./DebugHelper.js";
+import { baseConfig as config } from "../../wdio.base.conf.js";
+import fs from "fs";
 
 export async function performActionWithLogging(action, logMessage) {
   try {
@@ -14,12 +13,12 @@ export async function performActionWithLogging(action, logMessage) {
     allure.endStep("passed");
     return result;
   } catch (error) {
-    await perfomActionsOnError(error);
+    await performActionsOnError(error);
     throw error;
   }
 }
 
-async function perfomActionsOnError(error) {
+async function performActionsOnError(error) {
   Logger.error(error.message);
   allure.endStep("failed");
 
@@ -30,8 +29,7 @@ async function perfomActionsOnError(error) {
 export async function waitForDocumentReadyState(timeout = TIMEOUTS.medium) {
   await performActionWithLogging(async () => {
     await browser.waitUntil(
-      async () =>
-        (await browser.execute(() => document.readyState)) === "complete",
+      async () => (await browser.execute(() => document.readyState)) === "complete",
       { timeout }
     );
   }, "Waiting for the page to be fully loaded");
@@ -47,10 +45,24 @@ export async function navigateTo(path) {
   }, `Navigate to: "${fullUrl}"`);
 }
 
-async function buildUrl(path) {
+function buildUrl(path) {
   const baseUrl = config.baseUrl;
-  const url = path.startsWith("http")
-    ? path
-    : new URL(path, baseUrl).toString();
+  const url = path.startsWith("http") ? path : new URL(path, baseUrl).toString();
   return url;
+}
+
+export function ensureDirExists(dirPath) {
+  if (!fs.existsSync(dirPath)) {
+    fs.mkdirSync(dirPath, { recursive: true });
+  }
+}
+
+export function generateFileName(postfix = "", extension = "txt") {
+  const now = new Date();
+  const pad = (num, len = 2) => String(num).padStart(len, "0");
+
+  const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
+  const timeStr = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
+
+  return `${dateStr}_${timeStr}${postfix}.${extension}`;
 }

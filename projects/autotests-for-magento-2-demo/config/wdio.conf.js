@@ -1,38 +1,13 @@
+import { baseConfig } from "../../../wdio.base.conf.js";
 export const config = {
-  baseUrl: process.env.BASE_URL || "https://magento2demo.firebearstudio.com/",
-
-  runner: "local",
-
+  ...baseConfig,
   specs: ["../features/**/*.feature"],
-
-  maxInstances: 1,
-
-  capabilities: [
-    {
-      browserName: "chrome",
-      "goog:chromeOptions": {
-        args: ["--disable-notifications"],
-      },
-    },
-  ],
-
-  logLevel: "silent",
-
-  bail: 0,
-
-  waitforTimeout: 5000,
-
-  connectionRetryTimeout: 120000,
-
-  connectionRetryCount: 3,
-
-  framework: "cucumber",
 
   reporters: [
     [
       "allure",
       {
-        outputDir: "./projects/autotests-for-magento-2-demo/allure-results",
+        outputDir: "./artifacts/allure-results",
         disableWebdriverStepsReporting: true,
         disableWebdriverScreenshotsReporting: true,
         useCucumberStepReporter: true,
@@ -41,7 +16,7 @@ export const config = {
   ],
 
   cucumberOpts: {
-    require: ["./projects/autotests-for-magento-2-demo/features/**/*.js"],
+    require: ["./features/**/*.js"],
     backtrace: false,
     snippets: true,
     source: true,

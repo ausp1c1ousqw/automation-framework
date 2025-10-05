@@ -4,15 +4,13 @@ class Input extends BaseElement {
   constructor(elementOrLocator, name) {
     super(elementOrLocator, name, "Input");
   }
-  async type(text) {
+  async typeText(text) {
     await this.waitForDisplayed();
     await this.clear();
     await this.setValue(text);
     const value = await this.getValue();
     if (value !== text) {
-      throw new Error(
-        `Entered value: "${value}" does not match expected: "${text}"`
-      );
+      throw new Error(`Entered value: "${value}" does not match expected: "${text}"`);
     }
   }
 }

@@ -1,12 +1,3 @@
-import * as pageHelpers from "../../../src/core/pageHelpers.js";
-import {
-  Button,
-  Input,
-  Checkbox,
-  Label,
-  Link,
-  Dropdown,
-} from "../../../src/core/elements/index.js";
 import { headerSelectors } from "./selectors/selectors.js";
 
 class HeaderComponent {
@@ -31,7 +22,7 @@ class HeaderComponent {
     await pageHelpers.assertTextsWithLogging(
       actualMessage,
       expectedMessage,
-      `Assert actual Welcome message: ${actualMessage} with expected: ${expectedMessage}`
+      `Assert actual Welcome message: '${actualMessage}' with expected: '${expectedMessage}'`
     );
   }
 }

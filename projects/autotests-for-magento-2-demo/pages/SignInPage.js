@@ -1,18 +1,10 @@
-import BasePage from "../../../src/core/BasePage.js";
-import * as pageHelpers from "../../../src/core/pageHelpers.js";
-import {
-  Button,
-  Input,
-  Checkbox,
-  Label,
-  Link,
-  Dropdown,
-} from "../../../src/core/elements/index.js";
+import { urls } from "../config/urls.js";
 import { signInPageSelectors } from "./selectors/selectors.js";
 
 class SignInPage extends BasePage {
   constructor() {
     super(
+      urls.signInPage,
       new Label(signInPageSelectors.signInPageTitle, "SignIn page title"),
       "Customer Login"
     );
@@ -48,7 +40,11 @@ class SignInPage extends BasePage {
 
   async verifyTopErrorMessage(expectedError) {
     const actualError = await this.topErrorMessage.getText();
-    await pageHelpers.assertTextsWithLogging(actualError, expectedError);
+    await pageHelpers.assertTextsWithLogging(
+      actualError,
+      expectedError,
+      `Assert actual error message: '${actualError}' with expected: ${expectedError}`
+    );
   }
 }
 

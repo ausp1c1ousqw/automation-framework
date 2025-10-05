@@ -1,7 +1,7 @@
-import * as utils from "./utils.js";
+import * as utils from "../utils/utils.js";
 import { TIMEOUTS } from "../configs/timeouts.js";
-import Logger from "./Logger.js";
 import allure from "@wdio/allure-reporter";
+
 class BaseElement {
   constructor(elementOrLocator, name, type) {
     this.elementOrLocator = elementOrLocator;
@@ -68,10 +68,7 @@ class BaseElement {
       "Getting text from element"
     );
 
-    await this.performActionWithLogging(
-      async () => text,
-      `Text of the element: '${text}'`
-    );
+    await this.performActionWithLogging(async () => text, `Text of the element: '${text}'`);
     return text;
   }
 
@@ -96,9 +93,7 @@ class BaseElement {
     await this.performActionWithLogging(async (el) => {
       await el.moveTo();
       await browser.execute((element) => {
-        element.dispatchEvent(
-          new MouseEvent("mouseover", { bubbles: true, cancelable: true })
-        );
+        element.dispatchEvent(new MouseEvent("mouseover", { bubbles: true, cancelable: true }));
       }, el);
     }, "Move mouse to element");
   }
