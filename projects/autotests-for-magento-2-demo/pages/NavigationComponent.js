@@ -1,4 +1,5 @@
 import { navigationSelectors } from "./selectors/selectors.js";
+import { BasePage, Button, Label, Input, Checkbox, Link, pageHelpers } from "@sergey/gui-framework";
 
 class NavigationComponent extends BasePage {
   // Page Elements

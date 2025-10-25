@@ -7,8 +7,8 @@ export const headerSelectors = {
 export const signInPageSelectors = {
   signInPageTitle: `[data-ui-id="page-title-wrapper"]`,
   emailField: ".form-login #email",
-  passwordField: ".form-login #pass",
-  signInButton: ".form-login #send2",
+  passwordField: ".form-login #password",
+  signInButton: ".form-login .primary#send2",
   topErrorMessage: `[data-ui-id="message-error"]`,
   forgotPasswordLink: `//a[text()='Forgot Your Password?']`,
 };

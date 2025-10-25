@@ -1,0 +1,22 @@
+{
+  "name": "@sergey/core",
+  "version": "1.0.0",
+  "description": "Core utilities for Sergey’s automation frameworks (logger, helpers, etc.)",
+  "type": "module",
+  "main": "./src/index.js",
+  "exports": {
+    ".": {
+      "import": "./src/index.js"
+    }
+  },
+  "keywords": [
+    "automation",
+    "qa",
+    "framework",
+    "logger"
+  ],
+  "author": "Sergey Chernjavsky",
+  "license": "MIT",
+  "dependencies": {},
+  "devDependencies": {}
+}

@@ -1,12 +1,13 @@
 import allure from "@wdio/allure-reporter";
 import { TIMEOUTS } from "../configs/timeouts.js";
-import { baseConfig as config } from "../../wdio.base.conf.js";
-import fs from "fs";
+// import { baseConfig as config } from "../../../src/wdio.base.conf.js";
+import { logger } from "@sergey/core";
+import DebugHelper from "./DebugHelper.js";
 
 export async function performActionWithLogging(action, logMessage) {
   try {
     allure.startStep(logMessage);
-    Logger.info(logMessage);
+    logger.info(logMessage);
 
     const result = await action();
 
@@ -19,7 +20,7 @@ export async function performActionWithLogging(action, logMessage) {
 }
 
 async function performActionsOnError(error) {
-  Logger.error(error.message);
+  logger.error(error.message);
   allure.endStep("failed");
 
   await DebugHelper.takeScreenshot();
@@ -46,23 +47,8 @@ export async function navigateTo(path) {
 }
 
 function buildUrl(path) {
-  const baseUrl = config.baseUrl;
-  const url = path.startsWith("http") ? path : new URL(path, baseUrl).toString();
-  return url;
-}
-
-export function ensureDirExists(dirPath) {
-  if (!fs.existsSync(dirPath)) {
-    fs.mkdirSync(dirPath, { recursive: true });
-  }
-}
-
-export function generateFileName(postfix = "", extension = "txt") {
-  const now = new Date();
-  const pad = (num, len = 2) => String(num).padStart(len, "0");
-
-  const dateStr = `${now.getFullYear()}-${pad(now.getMonth() + 1)}-${pad(now.getDate())}`;
-  const timeStr = `${pad(now.getHours())}-${pad(now.getMinutes())}-${pad(now.getSeconds())}`;
-
-  return `${dateStr}_${timeStr}${postfix}.${extension}`;
+  // // const baseUrl = config.baseUrl;
+  // // const url = path.startsWith("http") ? path : new URL(path, baseUrl).toString();
+  // return url;
+  return path;
 }

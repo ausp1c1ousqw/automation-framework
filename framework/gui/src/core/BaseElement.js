@@ -1,6 +1,7 @@
 import * as utils from "../utils/utils.js";
 import { TIMEOUTS } from "../configs/timeouts.js";
 import allure from "@wdio/allure-reporter";
+import { logger } from "@sergey/core";
 
 class BaseElement {
   constructor(elementOrLocator, name, type) {
@@ -57,7 +58,7 @@ class BaseElement {
 
   async JSClickOnError(el, error) {
     const message = `${this.type} '${this.name}' :: JS fallback click due to error: ${error.message}`;
-    Logger.warn(message);
+    logger.warn(message);
     allure.step(message);
     await browser.execute((el) => el.click(), el);
   }

@@ -1,5 +1,6 @@
 import { urls } from "../config/urls.js";
 import { registrationPageSelectors } from "./selectors/selectors.js";
+import { BasePage, Button, Label, Input, Checkbox, Link, pageHelpers } from "@sergey/gui-framework";
 
 class RegistrationPage extends BasePage {
   constructor() {

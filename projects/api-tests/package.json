@@ -1,0 +1,14 @@
+{
+  "name": "my-test-project",
+  "version": "1.0.0",
+  "type": "module",
+  "dependencies": {
+    "@sergey/api-framework": "file:../../framework/api"
+  },
+  "scripts": {
+    "test": "cucumber-js"
+  },
+  "devDependencies": {
+    "@cucumber/cucumber": "^12.2.0"
+  }
+}
