@@ -1,7 +1,7 @@
 import path from "path";
 import { writeFile } from "fs/promises";
-import { ensureDirExists, generateTimestampedFileName } from "../../utils/fileHelpers.js";
-import { getLogger } from "../utils/initFramework.js";
+import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
+import { getLogger } from "./initFramework.js";
 const logger = getLogger();
 
 class PageSource {
