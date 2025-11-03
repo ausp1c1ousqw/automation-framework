@@ -25,7 +25,7 @@ export function generateTimestampedFileName(extension = "txt") {
 export function createLogFile(logsDirPath = "artifacts/logs") {
   const logsDir = ensureDirExists(logsDirPath);
 
-  const logFile = generateFileName("log");
+  const logFile = generateTimestampedFileName("log");
   const logFilePath = path.join(logsDir, logFile);
 
   fs.writeFileSync(logFilePath, "", "utf8");
