@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { getLogger } from "../utils/initFramework.js";
+import { getLogger } from "../../utils/initFramework.js";
 const logger = getLogger();
 
 export async function assertTextsWithLogging(actualText, expectedText, message) {
