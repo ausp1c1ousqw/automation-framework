@@ -1,6 +1,6 @@
 import allure from "@wdio/allure-reporter";
-import Screenshot from "../../gui-framework/src/utils/Screenshot.js";
-import PageSource from "../../gui-framework/src/utils/PageSource.js";
+import Screenshot from "../../gui/utils//Screenshot.js";
+import PageSource from "../../gui/utils/PageSource.js";
 import { getLogger } from "../utils/initFramework.js";
 const logger = getLogger();
 
