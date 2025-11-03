@@ -1,8 +1,11 @@
 {
-  "name": "@automation-framework/gui",
-  "version": "1.0.0",
+  "name": "automation-framework",
+  "main": "./index.js",
   "type": "module",
-  "main": "./src/index.js",
+  "exports": {
+    "import": "./index.js",
+    "default": "./index.js"
+  },
   "dependencies": {
     "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",
     "@wdio/allure-reporter": "^8.35.0",
