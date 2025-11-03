@@ -1,4 +1,4 @@
-import { getConfig, getLogger } from "../utils/initFramework.js";
+import { getConfig, getLogger } from "../../utils/initFramework.js";
 const logger = getLogger();
 const config = getConfig();
 
