@@ -2,8 +2,13 @@ import fs from "fs";
 import { createLogFile } from "./fileHelpers.js";
 
 class Logger {
-  constructor() {
-    this.logFilePath = createLogFile();
+  constructor({ toConsole = true, toFile = true, toBuffer = true } = {}) {
+    this.toConsole = toConsole;
+    this.toFile = toFile;
+    this.toBuffer = toBuffer;
+
+    this.logFilePath = toFile ? createLogFile() : null;
+    this.buffer = [];
   }
 
   info(message) {
@@ -18,10 +23,19 @@ class Logger {
     this.#log("ERROR", message);
   }
 
+  getLogs() {
+    return this.buffer.join("\n");
+  }
+
+  clearLogs() {
+    this.buffer = [];
+  }
+
   #log(level, message) {
     const logLine = `${this.#getTimeStamp()}|${process.pid}|${level}|${message}`;
-    console.log(logLine);
-    this.#writeToFile(logLine);
+    if (this.toConsole) console.log(logLine);
+    if (this.toFile) this.#writeToFile(logLine);
+    if (this.toBuffer) this.buffer.push(logLine);
   }
 
   #writeToFile(message) {
