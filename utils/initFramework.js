@@ -12,9 +12,8 @@ export function initFramework(projectConfig, loggerSettings) {
   logger = new Logger(loggerSettings);
 }
 
-export async function runHooks(projectHooks) {
-  const hooks = new HookManager(fwHooks, projectHooks);
-  await hooks.runAll();
+export async function initHooks(projectHooks) {
+  return new HookManager(fwHooks, projectHooks);
 }
 
 export function getLogger() {

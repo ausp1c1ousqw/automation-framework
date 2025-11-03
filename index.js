@@ -5,5 +5,5 @@ export { default as Label } from "./gui/core/elements/Label.js";
 export { default as Link } from "./gui/core/elements/Link.js";
 export { default as Dropdown } from "./gui/core/elements/Dropdown.js";
 export { default as BasePage } from "./gui/core/BasePage.js";
-export { runHooks, initFramework } from "./utils/initFramework.js";
+export { initHooks, initFramework } from "./utils/initFramework.js";
 export * as pageHelpers from "./gui/core/pageHelpers.js";
