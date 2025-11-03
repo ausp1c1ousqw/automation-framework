@@ -2,18 +2,20 @@ import allure from "@wdio/allure-reporter";
 import Screenshot from "../utils/Screenshot.js";
 import PageSource from "../utils/PageSource.js";
 import { getLogger } from "../utils/initFramework.js";
-const logger = getLogger();
 
 const hooks = {
   beforeScenario: async function (world) {
+    const logger = getLogger();
     logger.info(`Scenario started: ${world.pickle.name}`);
   },
 
   beforeStep: async function (step) {
+    const logger = getLogger();
     logger.info(`Step: ${step.text}`);
   },
 
   afterStep: async function (step, scenario, { error }) {
+    const logger = getLogger();
     logger.info(`Step ended: ${step.text}`);
 
     const stepLogs = logger.getLogs();
@@ -23,10 +25,12 @@ const hooks = {
   },
 
   afterScenario: async function (world, result) {
+    const logger = getLogger();
     logger.info(`=== End Scenario: ${world.pickle.name} ===`);
   },
 
   onError: async function (error) {
+    const logger = getLogger();
     logger.error(error);
 
     const { screenshotPath, screenshot } = await Screenshot.take();
