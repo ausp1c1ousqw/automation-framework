@@ -13,9 +13,24 @@ export function initFramework(projectConfig, loggerSettings) {
 }
 
 export async function initHooks(projectHooks) {
-  return new HookManager(fwHooks, projectHooks);
-}
+  const result = { fwHooks };
 
+  for (const key in projectHooks) {
+    if (!result[key]) {
+      result[key] = projectHooks[key];
+    } else {
+      const defaultFn = result[key];
+      const projectFn = projectHooks[key];
+
+      result[key] = async (...args) => {
+        await defaultFn(...args);
+        await projectFn(...args);
+      };
+    }
+  }
+
+  return result;
+}
 export function getLogger() {
   return logger;
 }
