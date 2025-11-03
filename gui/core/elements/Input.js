@@ -1,6 +1,6 @@
 import BaseElement from "../BaseElement.js";
-import Framework from "../../configs/Framework.js";
-const { logger } = Framework;
+import { getLogger } from "../../../utils/initFramework.js";
+const logger = getLogger();
 
 class Input extends BaseElement {
   constructor(elementOrLocator, name) {
