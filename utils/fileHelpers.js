@@ -11,7 +11,7 @@ export function ensureDirExists(dirPath) {
   return fullPath;
 }
 
-export function generateTimestampedFileNam(extension = "txt") {
+export function generateTimestampedFileName(extension = "txt") {
   const now = new Date();
   const pad = (num, len = 2) => String(num).padStart(len, "0");
 
