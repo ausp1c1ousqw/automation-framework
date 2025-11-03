@@ -2,10 +2,10 @@ import path from "path";
 import { writeFile } from "fs/promises";
 import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
 import { getLogger } from "./initFramework.js";
-const logger = getLogger();
 
 class PageSource {
   static async get() {
+    const logger = getLogger();
     try {
       const pageSource = await browser.getPageSource();
       const pageSourceDir = ensureDirExists(`${fw.config.debugDirPath}/page_sources`);

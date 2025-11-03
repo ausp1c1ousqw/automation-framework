@@ -2,10 +2,10 @@ import path from "path";
 import { writeFile } from "fs/promises";
 import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
 import { getLogger } from "./initFramework.js";
-const logger = getLogger();
 
 class Screenshot {
   static async take() {
+    const logger = getLogger();
     try {
       const screenshot = await browser.takeScreenshot();
       const screenshotsDir = ensureDirExists(`${fw.config.debugDirPath}//screenshots`);
