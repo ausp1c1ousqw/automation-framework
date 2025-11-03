@@ -9,6 +9,7 @@ let logger = null;
 export function initFramework(projectConfig, loggerSettings) {
   config = deepmerge(fwConfig, projectConfig);
   logger = new Logger(loggerSettings);
+  console.log(logger, config);
 }
 
 export async function initHooks(projectHooks) {
@@ -31,9 +32,11 @@ export async function initHooks(projectHooks) {
   return result;
 }
 export function getLogger() {
+  console.log(logger);
   return logger;
 }
 
 export function getConfig() {
+  console.log(config);
   return config;
 }
