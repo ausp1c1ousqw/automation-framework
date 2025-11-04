@@ -1,5 +1,5 @@
 import fwConfig from "../config/projectConfig.js";
-import { Logger } from "../utils";
+import { Logger } from "../utils/index.js";
 import fwHooks from "../hooks/hooks.js";
 import { setConfig, setLogger } from "../di-container/di-container.js";
 import deepmerge from "deepmerge";

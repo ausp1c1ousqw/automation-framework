@@ -1,4 +1,4 @@
-import { logger, config } from "../../di-container";
+import { logger, config } from "../../di-container/index.js";
 
 class BaseElement {
   constructor(elementOrLocator, name, type) {

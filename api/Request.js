@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { logger } from "../di-container";
+import { logger } from "../di-container/index.js";
 
 class Request {
   constructor(baseApi, headers, responseWrapper) {

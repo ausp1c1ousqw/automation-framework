@@ -1,5 +1,5 @@
 import allure from "@wdio/allure-reporter";
-import { Screenshot, PageSource } from "../utils";
+import { Screenshot, PageSource } from "../utils/index.js";
 import { getLogger } from "../di-container/di-container.js";
 
 const hooks = {

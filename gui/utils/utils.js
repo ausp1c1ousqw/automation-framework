@@ -1,4 +1,4 @@
-import { config, logger } from "../../di-container";
+import { config, logger } from "../../di-container/index.js";
 
 export async function waitForDocumentReadyState(timeout) {
   const effectiveTimeout = timeout ?? config.timeouts.medium;
