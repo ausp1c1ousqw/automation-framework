@@ -28,5 +28,5 @@ export async function initHooks(projectHooks) {
     }
   }
 
-  return result;
+  return fwHooks;
 }
