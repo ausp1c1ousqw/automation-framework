@@ -1,9 +1,7 @@
-import { getConfig, getLogger } from "../../utils/initFramework.js";
+import { config, logger } from "../../di-container";
 
 export async function waitForDocumentReadyState(timeout) {
   const effectiveTimeout = timeout ?? config.timeouts.medium;
-  const logger = getLogger();
-  const config = getConfig();
 
   logger.info("Waiting for the page to be fully loaded");
 
@@ -14,9 +12,6 @@ export async function waitForDocumentReadyState(timeout) {
 }
 
 export async function navigateTo(path) {
-  const logger = getLogger();
-  const config = getConfig();
-
   logger.info(`Build full URL from path: ${path}`);
   const fullUrl = buildUrl(path);
 
@@ -25,8 +20,6 @@ export async function navigateTo(path) {
 }
 
 function buildUrl(path) {
-  const logger = getLogger();
-  const config = getConfig();
   const url = path.startsWith("http") ? path : new URL(path, config.baseUrl).toString();
   return url;
 }

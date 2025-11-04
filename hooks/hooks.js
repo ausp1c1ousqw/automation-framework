@@ -1,7 +1,6 @@
 import allure from "@wdio/allure-reporter";
-import Screenshot from "../utils/Screenshot.js";
-import PageSource from "../utils/PageSource.js";
-import { getLogger } from "../utils/initFramework.js";
+import { Screenshot, PageSource } from "../utils";
+import { getLogger } from "../di-container/di-container.js";
 
 const hooks = {
   beforeScenario: async function (world) {

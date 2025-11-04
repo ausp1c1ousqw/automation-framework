@@ -1,6 +1,5 @@
 import supertest from "supertest";
-import { getLogger } from "../utils/initFramework.js";
-const logger = getLogger();
+import { logger } from "../di-container";
 
 class Request {
   constructor(baseApi, headers, responseWrapper) {

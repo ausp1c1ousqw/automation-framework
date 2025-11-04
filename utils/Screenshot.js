@@ -1,7 +1,7 @@
 import path from "path";
 import { writeFile } from "fs/promises";
 import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
-import { getLogger } from "./initFramework.js";
+import { getLogger } from "../di-container/di-container.js";
 
 class Screenshot {
   static async take() {

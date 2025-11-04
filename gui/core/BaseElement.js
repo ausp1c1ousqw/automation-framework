@@ -1,6 +1,4 @@
-import { getLogger, getConfig } from "../../utils/initFramework.js";
-const logger = getLogger();
-const config = getConfig();
+import { logger, config } from "../../di-container";
 
 class BaseElement {
   constructor(elementOrLocator, name, type) {

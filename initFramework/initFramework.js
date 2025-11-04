@@ -1,15 +1,14 @@
-import fwConfig from "../config/config.js";
-import Logger from "./Logger.js";
-import fwHooks from "../config/hooks.js";
+import fwConfig from "../config/projectConfig.js";
+import { Logger } from "../utils";
+import fwHooks from "../hooks/hooks.js";
+import { setConfig, setLogger } from "../di-container/di-container.js";
 import deepmerge from "deepmerge";
 
-let config = null;
-let logger = null;
-
 export function initFramework(projectConfig, loggerSettings) {
-  config = deepmerge(fwConfig, projectConfig);
-  logger = new Logger(loggerSettings);
-  console.log("framework", logger, config);
+  const config = deepmerge(fwConfig, projectConfig);
+  const logger = new Logger(loggerSettings);
+  setConfig(config);
+  setLogger(logger);
 }
 
 export async function initHooks(projectHooks) {
@@ -30,13 +29,4 @@ export async function initHooks(projectHooks) {
   }
 
   return result;
-}
-export function getLogger() {
-  console.log(logger);
-  return logger;
-}
-
-export function getConfig() {
-  console.log(config);
-  return config;
 }

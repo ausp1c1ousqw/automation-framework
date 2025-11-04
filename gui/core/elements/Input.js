@@ -1,6 +1,5 @@
 import BaseElement from "../BaseElement.js";
-import { getLogger } from "../../../utils/initFramework.js";
-const logger = getLogger();
+import { logger } from "../../../di-container";
 
 class Input extends BaseElement {
   constructor(elementOrLocator, name) {

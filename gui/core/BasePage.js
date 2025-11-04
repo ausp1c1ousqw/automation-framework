@@ -1,8 +1,6 @@
 import * as pageHelpers from "./pageHelpers.js";
 import * as utils from "../utils/utils.js";
-import { getLogger } from "../../utils/initFramework.js";
-console.log("Basepage");
-const logger = getLogger();
+import { logger } from "../../di-container";
 
 class BasePage {
   constructor(pageURL, mainEl, expectedTextOfMainEl) {

@@ -1,6 +1,5 @@
 import { expect } from "chai";
-import { getLogger } from "../../utils/initFramework.js";
-const logger = getLogger();
+import { logger } from "../../di-container";
 
 export async function assertTextsWithLogging(actualText, expectedText, message) {
   const fullMessage = `${message}
