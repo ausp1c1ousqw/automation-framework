@@ -1,4 +1,3 @@
 import { getConfig, getLogger } from "./di-container.js";
-const config = getConfig();
-const logger = getLogger();
-export default { config, logger };
+export const config = getConfig();
+export const logger = getLogger();
