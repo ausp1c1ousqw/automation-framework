@@ -12,9 +12,8 @@ export function initFramework(projectConfig, loggerSettings) {
 }
 
 export async function initHooks(projectHooks) {
-  console.log(fwHooks);
   const result = { ...fwHooks };
-  console.log(result);
+
   for (const key in projectHooks) {
     if (!result[key]) {
       result[key] = projectHooks[key];
@@ -28,6 +27,6 @@ export async function initHooks(projectHooks) {
       };
     }
   }
-  console.log(result);
+
   return result;
 }
