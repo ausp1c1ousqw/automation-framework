@@ -1,10 +1,11 @@
 {
   "name": "automation-framework",
-  "main": "./index.js",
   "type": "module",
   "exports": {
-    "import": "./index.js",
-    "default": "./index.js"
+    "api": "./api/index.js",
+    "gui": "./gui/index.js",
+    "initFramework": "./initFramework/index.js",
+    "utils": "./utils/index.js"
   },
   "dependencies": {
     "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",
