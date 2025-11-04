@@ -1,5 +1,5 @@
 import { expect } from "chai";
-import { logger } from "../../di-container/index.js";
+import { logger } from "../../di-container/di-container.js";
 
 export async function assertTextsWithLogging(actualText, expectedText, message) {
   const fullMessage = `${message}

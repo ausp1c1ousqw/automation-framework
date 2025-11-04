@@ -1,5 +1,5 @@
-let config = null;
-let logger = null;
+export let config = null;
+export let logger = null;
 
 export function setConfig(c) {
   config = c;

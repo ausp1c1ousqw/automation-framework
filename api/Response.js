@@ -3,7 +3,7 @@ import chai from "chai";
 import chaiSubset from "chai-subset";
 chai.use(chaiSubset);
 const { expect } = chai;
-import { logger } from "../di-container/index.js";
+import { logger } from "../di-container/di-container.js";
 
 class Response {
   constructor(res) {

@@ -4,12 +4,8 @@ import { getLogger } from "../di-container/di-container.js";
 
 const hooks = {
   beforeScenario: async function (world) {
-    try {
-      const logger = getLogger();
-      logger.info(`Scenario started: ${world.pickle.name}`);
-    } catch (e) {
-      console.log(e.message);
-    }
+    const logger = getLogger();
+    logger.info(`Scenario started: ${world.pickle.name}`);
   },
 
   beforeStep: async function (step) {

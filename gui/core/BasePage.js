@@ -1,6 +1,6 @@
 import * as pageHelpers from "./pageHelpers.js";
 import * as utils from "../utils/utils.js";
-import { logger } from "../../di-container/index.js";
+import { logger } from "../../di-container/di-container.js";
 
 class BasePage {
   constructor(pageURL, mainEl, expectedTextOfMainEl) {
