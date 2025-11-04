@@ -36,7 +36,7 @@ class BaseElement {
   }
 
   async getValue() {
-    const el = await this.getEl();
+    const el = await this.#getEl();
     return await el.getValue();
   }
 
