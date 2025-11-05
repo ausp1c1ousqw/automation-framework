@@ -11,9 +11,10 @@
     "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",
     "@wdio/allure-reporter": "^8.35.0",
     "chai": "^4.3.7",
+    "chai-subset": "^1.6.0",
     "deepmerge": "^4.3.1",
-    "webdriverio": "^8.35.0",
     "lodash-es": "^4.17.21",
-    "supertest": "^6.3.3"
+    "supertest": "^6.3.3",
+    "webdriverio": "^8.35.0"
   }
 }
