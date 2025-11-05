@@ -3,9 +3,11 @@ import { logger, config } from "../di-container/di-container.js";
 
 class Request {
   constructor(responseWrapper) {
-    this.request = supertest(config.baseApi);
-    this.headers = config.headers;
-    this.responseWrapper = responseWrapper;
+    this.request = supertest("https://reqres.in/api");
+    (this.headers = {
+      "x-api-key": "reqres-free-v1",
+    }),
+      (this.responseWrapper = responseWrapper);
   }
 
   async get(endpoint, headers = {}) {
