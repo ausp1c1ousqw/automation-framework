@@ -13,8 +13,10 @@ export function getConfig() {
 
 export function setLogger(l) {
   logger = l;
+  console.log(logger);
 }
 
 export function getLogger() {
+  console.log(logger);
   return logger;
 }
