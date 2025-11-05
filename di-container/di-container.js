@@ -7,6 +7,7 @@ export function setConfig(c) {
 }
 
 export function getConfig() {
+  console.log(config);
   return config;
 }
 
