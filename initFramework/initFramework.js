@@ -8,5 +8,4 @@ export function initFramework(projectConfig, loggerSettings) {
   const logger = new Logger(loggerSettings);
   setConfig(config);
   setLogger(logger);
-  console.log(config);
 }
