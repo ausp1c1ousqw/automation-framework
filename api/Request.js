@@ -1,6 +1,6 @@
 import supertest from "supertest";
-import { logger, config } from "../di-container/di-container.js";
-console.log(config);
+import { logger, config, getConfig } from "../di-container/di-container.js";
+console.log(getConfig());
 
 class Request {
   constructor(responseWrapper) {
