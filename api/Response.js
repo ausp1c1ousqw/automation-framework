@@ -83,7 +83,7 @@ class Response {
     const logMessage = `RESPONSE ::
     Status: ${this.res.status}
     Body: ${JSON.stringify(this.res.body, null, 2)}`;
-    this.#log(logMessage);
+    logger.info(logMessage);
   }
 
   #get(path) {
