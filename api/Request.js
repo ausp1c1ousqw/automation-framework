@@ -1,10 +1,10 @@
 import supertest from "supertest";
-import { logger } from "../di-container/di-container.js";
+import { logger, config } from "../di-container/di-container.js";
 
 class Request {
-  constructor(baseApi, headers, responseWrapper) {
-    this.request = supertest(baseApi);
-    this.headers = headers;
+  constructor(responseWrapper) {
+    this.request = supertest(config.baseApi);
+    this.headers = config.headers;
     this.responseWrapper = responseWrapper;
   }
 
