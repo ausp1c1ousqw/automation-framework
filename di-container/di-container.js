@@ -3,6 +3,7 @@ export let logger = null;
 
 export function setConfig(c) {
   config = c;
+  console.log(config);
 }
 
 export function getConfig() {
