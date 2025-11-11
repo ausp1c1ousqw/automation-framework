@@ -1,6 +1,5 @@
 import supertest from "supertest";
 import { logger, config, getConfig } from "../di-container/di-container.js";
-console.log(getConfig());
 
 class Request {
   constructor(responseWrapper) {

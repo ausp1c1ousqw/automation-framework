@@ -3,17 +3,17 @@ import { Screenshot, PageSource } from "../utils/index.js";
 import { getLogger } from "../di-container/di-container.js";
 
 const hooks = {
-  before: async function (world) {
+  before: function (world) {
     const logger = getLogger();
     logger.info(`Scenario started: ${world.pickle.name}`);
   },
 
-  beforeStep: async function (step) {
+  beforeStep: function (step) {
     const logger = getLogger();
     logger.info(`Step: ${step.text}`);
   },
 
-  afterStep: async function (step, scenario, { error }) {
+  afterStep: function (step, scenario, { error }) {
     const logger = getLogger();
     logger.info(`Step ended: ${step.text}`);
 
@@ -23,7 +23,7 @@ const hooks = {
     logger.clear();
   },
 
-  after: async function (world, result) {
+  after: function (world, result) {
     const logger = getLogger();
     logger.info(`=== End Scenario: ${world.pickle.name} ===`);
   },
