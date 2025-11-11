@@ -1,2 +1,2 @@
 export { initFramework } from "./initFramework.js";
-export { initHooks } from "./initHooks.js";
+export { default as fwHooks } from "../hooks/hooks.js";
