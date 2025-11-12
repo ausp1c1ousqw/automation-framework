@@ -13,7 +13,7 @@ const hooks = {
     logger.info(`Step: ${step.text}`);
   },
 
-  afterStep: function (step, scenario, { error }) {
+  afterStep: async function (step, scenario, { error }) {
     const logger = getLogger();
     try {
       logger.info(`Step ended: ${step.text}`);
@@ -23,7 +23,7 @@ const hooks = {
 
       logger.clear();
     } catch (error) {
-      onError(error);
+      await onError(error);
     }
   },
 
