@@ -1,6 +1,6 @@
 import Screenshot from "./Screenshot.js";
 import PageSource from "./PageSource.js";
-import { logger } from "../di-container/di-container.js";
+import { logger } from "automation-framework/di-container";
 import allure from "@wdio/allure-reporter";
 
 export default async function (error) {

@@ -1,7 +1,7 @@
 import path from "path";
 import { writeFile } from "fs/promises";
 import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
-import { logger, config } from "../di-container/di-container.js";
+import { logger, config } from "automation-framework/di-container";
 
 class Screenshot {
   static async take() {
