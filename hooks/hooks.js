@@ -21,7 +21,7 @@ const hooks = {
       const stepLogs = logger.getLogs();
       allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");
 
-      logger.clear();
+      logger.clearLogs();
     } catch (error) {
       await onError(error);
     }
