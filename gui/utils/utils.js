@@ -1,4 +1,4 @@
-import { config, logger } from "../../di-container/di-container.js";
+import { logger, config } from "automation-framework/di-container";
 
 export async function waitForDocumentReadyState(timeout) {
   const effectiveTimeout = timeout ?? config.timeouts.medium;

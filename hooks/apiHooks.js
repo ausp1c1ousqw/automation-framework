@@ -6,7 +6,7 @@ const hooks = {
     logger.info(`Scenario started: ${world.pickle.name}`);
   },
 
-  afterStep: async function (step, scenario, { error }) {
+  afterStep: function (step, scenario, { error }) {
     try {
       const stepLogs = logger.getLogs();
       allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");

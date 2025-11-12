@@ -1,9 +1,9 @@
 import { get } from "lodash-es";
 import chai from "chai";
 import chaiSubset from "chai-subset";
+import { logger } from "automation-framework/di-container";
 chai.use(chaiSubset);
 const { expect } = chai;
-import { logger } from "../di-container/di-container.js";
 
 class Response {
   constructor(res) {

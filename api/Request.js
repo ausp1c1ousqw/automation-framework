@@ -1,5 +1,5 @@
 import supertest from "supertest";
-import { logger, config, getConfig } from "../di-container/di-container.js";
+import { logger, config } from "automation-framework/di-container";
 
 class Request {
   constructor(responseWrapper) {

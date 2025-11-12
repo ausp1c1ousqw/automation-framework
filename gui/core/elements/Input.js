@@ -1,5 +1,5 @@
 import BaseElement from "../BaseElement.js";
-import { logger } from "../../../di-container/di-container.js";
+import { logger } from "automation-framework/di-container";
 
 class Input extends BaseElement {
   constructor(elementOrLocator, name) {
