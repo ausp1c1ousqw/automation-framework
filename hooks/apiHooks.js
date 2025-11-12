@@ -1,5 +1,5 @@
 import allure from "@wdio/allure-reporter";
-import { logger } from "../di-container/di-container.js";
+import { logger } from "automation-framework/di-container";
 
 const hooks = {
   before: function (world) {

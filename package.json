@@ -4,9 +4,10 @@
   "exports": {
     "./api": "./api/index.js",
     "./gui": "./gui/index.js",
-    "./initFramework": "./initFramework/index.js",
+    "./initFramework": "./initFramework/initFramework.js",
     "./utils": "./utils/index.js",
-    "./hooks": "./hooks/index.js"
+    "./hooks": "./hooks/index.js",
+    "./di-container": "./di-container/di-container.js"
   },
   "dependencies": {
     "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",
