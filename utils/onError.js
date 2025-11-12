@@ -1,6 +1,6 @@
-import Screenshot from "./Screenshot";
-import PageSource from "./PageSource";
-import { getLogger } from "../di-container/di-container";
+import Screenshot from "./Screenshot.js";
+import PageSource from "./PageSource.js";
+import { getLogger } from "../di-container/di-container.js";
 
 export default async function (error) {
   const logger = getLogger();
