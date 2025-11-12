@@ -5,7 +5,8 @@
     "./api": "./api/index.js",
     "./gui": "./gui/index.js",
     "./initFramework": "./initFramework/index.js",
-    "./utils": "./utils/index.js"
+    "./utils": "./utils/index.js",
+    "./hooks": "./hooks/index.js"
   },
   "dependencies": {
     "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",

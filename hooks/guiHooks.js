@@ -4,17 +4,14 @@ import { logger } from "../di-container/di-container.js";
 
 const hooks = {
   before: function (world) {
-    // const logger = getLogger();
     logger.info(`Scenario started: ${world.pickle.name}`);
   },
 
   beforeStep: function (step) {
-    // const logger = getLogger();
     logger.info(`Step: ${step.text}`);
   },
 
   afterStep: async function (step, scenario, { error }) {
-    // const logger = getLogger();
     try {
       logger.info(`Step ended: ${step.text}`);
 
@@ -24,12 +21,11 @@ const hooks = {
       logger.clearLogs();
     } catch (error) {
       await onError(error);
+      throw error;
     }
   },
 
   after: function (world, result) {
-    // const logger = getLogger();
-
     logger.info(`=== End Scenario: ${world.pickle.name} ===`);
   },
 };
