@@ -13,7 +13,7 @@ const hooks = {
     logger.clearLogs();
 
     if (error) {
-      logger.error(error);
+      logger.error(error.message || error);
       throw error;
     }
   },
