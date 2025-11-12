@@ -1,12 +1,10 @@
 import path from "path";
 import { writeFile } from "fs/promises";
 import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
-import { getLogger, getConfig } from "../di-container/di-container.js";
+import { logger, config } from "../di-container/di-container.js";
 
 class PageSource {
   static async get() {
-    const logger = getLogger();
-    const config = getConfig();
     try {
       const pageSource = await browser.getPageSource();
       const pageSourceDir = ensureDirExists(`${config.debugDirPath}/page_sources`);

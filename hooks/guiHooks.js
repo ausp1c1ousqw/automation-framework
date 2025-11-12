@@ -1,5 +1,5 @@
 import allure from "@wdio/allure-reporter";
-import { onError } from "../utils/index.js";
+import { onError } from "../utils/";
 import { logger } from "../di-container/di-container.js";
 
 const hooks = {

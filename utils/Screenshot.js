@@ -1,12 +1,10 @@
 import path from "path";
 import { writeFile } from "fs/promises";
 import { ensureDirExists, generateTimestampedFileName } from "./fileHelpers.js";
-import { getLogger, getConfig } from "../di-container/di-container.js";
+import { logger, config } from "../di-container/di-container.js";
 
 class Screenshot {
   static async take() {
-    const logger = getLogger();
-    const config = getConfig();
     try {
       const screenshot = await browser.takeScreenshot();
       const screenshotsDir = ensureDirExists(`${config.debugDirPath}//screenshots`);
