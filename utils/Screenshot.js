@@ -7,7 +7,7 @@ class Screenshot {
   static async take() {
     try {
       const screenshot = await browser.takeScreenshot();
-      const screenshotsDir = ensureDirExists(`${config.debugDirPath}//screenshots`);
+      const screenshotsDir = ensureDirExists(`${config.debugDir}//screenshots`);
       const screenshotName = generateTimestampedFileName("png");
       const screenshotPath = path.join(screenshotsDir, screenshotName);
 

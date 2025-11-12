@@ -7,7 +7,7 @@ class PageSource {
   static async get() {
     try {
       const pageSource = await browser.getPageSource();
-      const pageSourceDir = ensureDirExists(`${config.debugDirPath}/page_sources`);
+      const pageSourceDir = ensureDirExists(`${config.debugDir}/page_sources`);
       const pageSourceName = generateTimestampedFileName("html");
       const pageSourcePath = path.join(pageSourceDir, pageSourceName);
 
