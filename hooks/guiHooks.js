@@ -12,14 +12,13 @@ const hooks = {
   },
 
   afterStep: async function (step, scenario, { error }) {
-    try {
-      logger.info(`Step ended: ${step.text}`);
+    logger.info(`Step ended: ${step.text}`);
 
-      const stepLogs = logger.getLogs();
-      allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");
+    const stepLogs = logger.getLogs();
+    allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");
 
-      logger.clearLogs();
-    } catch (error) {
+    logger.clearLogs();
+    if (error) {
       await onError(error);
       throw error;
     }

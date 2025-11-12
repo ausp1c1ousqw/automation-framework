@@ -7,12 +7,12 @@ const hooks = {
   },
 
   afterStep: function (step, scenario, { error }) {
-    try {
-      const stepLogs = logger.getLogs();
-      allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");
+    const stepLogs = logger.getLogs();
+    allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");
 
-      logger.clearLogs();
-    } catch (error) {
+    logger.clearLogs();
+
+    if (error) {
       logger.error(error);
       throw error;
     }
