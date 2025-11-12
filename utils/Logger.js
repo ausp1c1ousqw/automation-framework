@@ -7,7 +7,7 @@ class Logger {
     this.toFile = toFile;
     this.toBuffer = toBuffer;
 
-    this.logFilePath = toFile ? createLogFile() : null;
+    this.logFilePath = null;
     this.buffer = [];
   }
 
@@ -39,6 +39,9 @@ class Logger {
   }
 
   #writeToFile(message) {
+    if (!this.logFilePath) {
+      this.logFilePath = createLogFile();
+    }
     fs.appendFileSync(this.logFilePath, message + "\n", "utf8");
   }
 
