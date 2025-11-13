@@ -12,6 +12,7 @@
   "dependencies": {
     "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",
     "@wdio/allure-reporter": "^8.35.0",
+    "automation-framework": "^1.0.2",
     "chai": "^4.3.7",
     "chai-subset": "^1.6.0",
     "deepmerge": "^4.3.1",

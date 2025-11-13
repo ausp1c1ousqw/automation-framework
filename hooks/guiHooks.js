@@ -4,15 +4,15 @@ import { logger } from "automation-framework/di-container";
 
 const hooks = {
   before: function (world) {
-    logger.info(`Scenario started: ${world.pickle.name}`);
+    logger.info(`Scenario Started: ${world.pickle.name}`);
   },
 
   beforeStep: function (step) {
-    logger.info(`Step: ${step.text}`);
+    logger.info(`Step Started: ${step.text}`);
   },
 
   afterStep: async function (step, scenario, { error }) {
-    logger.info(`Step ended: ${step.text}`);
+    logger.info(`Step Ended: ${step.text}`);
 
     const stepLogs = logger.getLogs();
     allure.addAttachment(`Logs for: ${step.text}`, stepLogs, "text/plain");
@@ -25,7 +25,7 @@ const hooks = {
   },
 
   after: function (world, result) {
-    logger.info(`=== End Scenario: ${world.pickle.name} ===`);
+    logger.info(`Scenario Ended: ${world.pickle.name}`);
   },
 };
 export default hooks;

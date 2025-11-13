@@ -3,7 +3,7 @@ import { logger } from "automation-framework/di-container";
 
 const hooks = {
   before: function (world) {
-    logger.info(`Scenario started: ${world.pickle.name}`);
+    logger.info(`Scenario Started: ${world.pickle.name}`);
   },
 
   afterStep: function (step, scenario, { error }) {
@@ -19,7 +19,7 @@ const hooks = {
   },
 
   after: function (world, result) {
-    logger.info(`=== End Scenario: ${world.pickle.name} ===`);
+    logger.info(`Scenario Ended: ${world.pickle.name}`);
   },
 };
 export default hooks;

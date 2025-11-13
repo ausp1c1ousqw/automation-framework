@@ -15,7 +15,7 @@ class BasePage {
   }
 
   async verifyPageOpened() {
-    await utils.waitForDocumentReadyState();
+    //await utils.waitForDocumentReadyState();
     await this.verifyPageMainElement();
   }
 
