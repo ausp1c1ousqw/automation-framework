@@ -1,5 +1,6 @@
 import fs from "fs";
 import path from "path";
+import { config } from "automation-framework/di-container";
 
 export function ensureDirExists(dirPath) {
   const fullPath = path.join(process.cwd(), dirPath);
@@ -22,8 +23,8 @@ export function generateTimestampedFileName(extension = "txt") {
   return `${datePart}_${timePart}${pidPart}.${extension}`;
 }
 
-export function createLogFile(debugDir = "artifacts") {
-  const logsDir = ensureDirExists(`${debugDir}/logs`);
+export function createLogFile() {
+  const logsDir = ensureDirExists(`${config.debugDir}/logs`);
 
   const logFile = generateTimestampedFileName("log");
   const logFilePath = path.join(logsDir, logFile);
