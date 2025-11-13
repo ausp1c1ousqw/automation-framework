@@ -3,11 +3,15 @@ import { Logger } from "automation-framework/utils";
 import { setConfig, setLogger } from "automation-framework/di-container";
 import deepmerge from "deepmerge";
 
-export function initFramework(projectConfig, loggerSettings) {
+export function initConfig(projectConfig) {
   const config = deepmerge(fwConfig, projectConfig);
-  const logger = new Logger(loggerSettings);
 
   setConfig(config);
+}
+
+export function initLogger(loggerSettings) {
+  const logger = new Logger(loggerSettings);
+
   setLogger(logger);
 
   process.on("uncaughtException", (err) => {

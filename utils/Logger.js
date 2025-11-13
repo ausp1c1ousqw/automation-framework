@@ -2,10 +2,10 @@ import fs from "fs";
 import { createLogFile } from "./fileHelpers.js";
 
 class Logger {
-  constructor({ toConsole = true, toFile = true, toBuffer = true } = {}) {
+  constructor({ toConsole = true, toBuffer = true, debugDir = "/artifacts" } = {}) {
     this.toConsole = toConsole;
-    this.toFile = toFile;
     this.toBuffer = toBuffer;
+    this.debugDir = debugDir;
 
     this.logFilePath = null;
     this.buffer = [];
@@ -34,13 +34,13 @@ class Logger {
   #log(level, message) {
     const logLine = `${this.#getTimeStamp()}|${process.pid}|${level}|${message}`;
     if (this.toConsole) console.log(logLine);
-    if (this.toFile) this.#writeToFile(logLine);
+    if (this.debugDir) this.#writedebugDir(logLine);
     if (this.toBuffer) this.buffer.push(logLine);
   }
 
-  #writeToFile(message) {
+  #writedebugDir(message) {
     if (!this.logFilePath) {
-      this.logFilePath = createLogFile();
+      this.logFilePath = createLogFile("/artifacts");
     }
     fs.appendFileSync(this.logFilePath, message + "\n", "utf8");
   }

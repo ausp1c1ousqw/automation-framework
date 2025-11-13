@@ -22,8 +22,8 @@ export function generateTimestampedFileName(extension = "txt") {
   return `${datePart}_${timePart}${pidPart}.${extension}`;
 }
 
-export function createLogFile(logsDirPath = "artifacts/logs") {
-  const logsDir = ensureDirExists(logsDirPath);
+export function createLogFile(debugDir = "artifacts") {
+  const logsDir = ensureDirExists(`${debugDir}/logs`);
 
   const logFile = generateTimestampedFileName("log");
   const logFilePath = path.join(logsDir, logFile);
