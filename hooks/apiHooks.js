@@ -2,9 +2,7 @@ import allure from "@wdio/allure-reporter";
 import { logger } from "automation-framework/di-container";
 
 const hooks = {
-  before: function (world) {
-    logger.info(`Scenario Started: ${world.pickle.name}`);
-  },
+  before: function () {},
 
   afterStep: function (step, scenario, { error }) {
     const stepLogs = logger.getLogs();
