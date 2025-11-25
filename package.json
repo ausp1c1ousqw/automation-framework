@@ -4,20 +4,16 @@
   "exports": {
     "./api": "./api/index.js",
     "./gui": "./gui/index.js",
-    "./initFramework": "./initFramework/initFramework.js",
+    "./init": "./init/index.js",
     "./utils": "./utils/index.js",
-    "./hooks": "./hooks/index.js",
-    "./di-container": "./di-container/di-container.js"
+    "./di-container": "./di-container/container.js",
+    "./config": "./config/fwConfig.js"
   },
   "dependencies": {
-    "@automation-framework/core": "github:ausp1c1ousqw/core-for-frameworks",
-    "@wdio/allure-reporter": "^8.35.0",
-    "automation-framework": "^1.0.2",
     "chai": "^4.3.7",
     "chai-subset": "^1.6.0",
     "deepmerge": "^4.3.1",
     "lodash-es": "^4.17.21",
-    "supertest": "^6.3.3",
-    "webdriverio": "^8.35.0"
+    "supertest": "^6.3.3"
   }
 }

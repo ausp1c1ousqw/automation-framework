@@ -1,13 +1,5 @@
-import fwConfig from "../config/projectConfig.js";
 import { Logger } from "automation-framework/utils";
-import { setConfig, setLogger } from "automation-framework/di-container";
-import deepmerge from "deepmerge";
-
-export function initConfig(projectConfig) {
-  const config = deepmerge(fwConfig, projectConfig);
-
-  setConfig(config);
-}
+import { setLogger } from "automation-framework/di-container";
 
 export function initLogger(loggerSettings) {
   const logger = new Logger(loggerSettings);
