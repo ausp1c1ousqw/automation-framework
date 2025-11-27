@@ -1,0 +1,19 @@
+{
+  "name": "automation-framework",
+  "type": "module",
+  "exports": {
+    "./api": "./api/index.js",
+    "./gui": "./gui/index.js",
+    "./init": "./init/index.js",
+    "./utils": "./utils/index.js",
+    "./di-container": "./di-container/container.js",
+    "./config": "./config/fwConfig.js"
+  },
+  "dependencies": {
+    "chai": "^4.3.7",
+    "chai-subset": "^1.6.0",
+    "deepmerge": "^4.3.1",
+    "lodash-es": "^4.17.21",
+    "supertest": "^6.3.3"
+  }
+}
