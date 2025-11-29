@@ -15,12 +15,11 @@ class BasePage {
   }
 
   async verifyPageOpened() {
-    //await utils.waitForDocumentReadyState();
+    await utils.waitForDocumentReadyState();
     await this.verifyPageMainElement();
   }
 
   async verifyPageMainElement() {
-    await this.mainEl.waitForDisplayed();
     const actualText = await this.mainEl.getText();
 
     await pageHelpers.assertTextsWithLogging(

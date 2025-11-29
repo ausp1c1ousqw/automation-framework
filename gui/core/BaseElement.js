@@ -8,83 +8,67 @@ class BaseElement {
   }
 
   async click() {
-    await this.waitForDisplayed();
-    await this.waitForClickable();
-    await this.#clickWithFallback();
+    this._log("Clicking");
+    const el = await this.#getReadyEl();
+    await el.waitForClickable({ timeout: config.timeouts.medium });
+    await this.#clickWithFallback(el);
   }
 
   async getText() {
-    const text = await this.#actionOnElement(
-      async (el) => (await el.getText()).trim(),
-      "Getting text from element"
-    );
+    this._log(`Getting text`);
+    const el = await this.#getReadyEl();
+    const text = await el.getText();
 
-    this.#log(`Text of the element: '${text}'`);
+    this._log(`Text of the element: '${text}'`);
     return text;
   }
 
+  async waitSpecificText(expectedText, timeout = config.timeouts.medium) {
+    this._log(`Waiting for specific text`);
+    const el = await this.#getReadyEl();
+    await browser.waitUntil(async () => (await el.getText()) === expectedText, { timeout });
+  }
+
   async isSelected() {
-    const state = await this.#actionOnElement(
-      (el) => el.isSelected(),
-      "Checking if element is selected"
-    );
-    this.#log(`Selected state: ${state}`);
+    this._log(`Checking if element is selected`);
+    const el = await this.#getReadyEl();
+    const state = await el.isSelected();
+
+    this._log(`Selected state: ${state}`);
     return state;
   }
 
   async setValue(text) {
-    await this.#actionOnElement((el) => el.setValue(text), `Typing '${text}'`);
+    this._log(`Typing '${text}'`);
+    const el = await this.#getReadyEl();
+    await el.setValue(text);
   }
 
   async clear() {
-    await this.#actionOnElement((el) => el.clearValue(), "Clearing");
+    this._log(`Clearing`);
+    const el = await this.#getReadyEl();
+    await el.clearValue();
   }
 
   async getValue() {
-    const el = await this.#getEl();
+    const el = await this.#getReadyEl();
     return el.getValue();
   }
 
   async moveTo() {
-    await this.#actionOnElement(async (el) => {
-      await el.moveTo();
-      await browser.execute((element) => {
-        element.dispatchEvent(new MouseEvent("mouseover", { bubbles: true, cancelable: true }));
-      }, el);
-    }, "Move mouse to element");
+    this._log("Moving mouse to element");
+    const el = await this.#getReadyEl();
+    await el.moveTo();
+    await browser.execute((element) => {
+      element.dispatchEvent(new MouseEvent("mouseover", { bubbles: true, cancelable: true }));
+    }, el);
   }
 
-  async waitForExist(timeout = config.timeouts.medium) {
-    await this.#actionOnElement(
-      (el) => el.waitForExist({ timeout }),
-      "Waiting for element to exist"
-    );
-  }
-
-  async waitForDisplayed(timeout = config.timeouts.medium) {
-    await this.#actionOnElement(
-      (el) => el.waitForDisplayed({ timeout }),
-      "Waiting for element to be displayed"
-    );
-  }
-
-  async waitForClickable(timeout = config.timeouts.medium) {
-    await this.#actionOnElement(
-      (el) => el.waitForClickable({ timeout }),
-      "Waiting for element to be clickable"
-    );
-  }
-
-  async #actionOnElement(action, message) {
-    this.#log(message);
-
+  async #getReadyEl(timeout = config.timeouts.medium) {
     const el = await this.#getEl();
-    return action(el);
-  }
-
-  async #log(message) {
-    const fullMessage = `${this.type} '${this.name}' :: ${message}`;
-    logger.info(fullMessage);
+    await el.waitForExist({ timeout });
+    await el.waitForDisplayed({ timeout });
+    return el;
   }
 
   async #getEl() {
@@ -93,21 +77,21 @@ class BaseElement {
       : this.elementOrLocator;
   }
 
-  async #clickWithFallback() {
-    await this.#actionOnElement(async (el) => {
-      try {
-        await el.click();
-      } catch (error) {
-        await this.#clickViaJS(el, error);
-      }
-    }, "Clicking");
+  async #clickWithFallback(el) {
+    try {
+      await el.click();
+    } catch (error) {
+      this._log(`JS fallback click due to error: ${error.message}`, "warn");
+      await browser.execute((el) => el.click(), el);
+    }
   }
 
-  async #clickViaJS(el, error) {
-    const message = `${this.type} '${this.name}' :: JS fallback click due to error: ${error.message}`;
-    logger.warn(message);
+  async _log(message, level = "info") {
+    const fullMessage = `${this.type} '${this.name}' :: ${message}`;
 
-    await browser.execute((el) => el.click(), el);
+    if (level === "info") logger.info(fullMessage);
+    if (level === "warn") logger.warn(fullMessage);
+    if (level === "error") logger.error(fullMessage);
   }
 }
 export default BaseElement;
