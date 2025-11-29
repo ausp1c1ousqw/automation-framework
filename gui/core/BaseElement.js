@@ -19,25 +19,30 @@ class BaseElement {
       "Getting text from element"
     );
 
-    logger.info(`Text of the element: '${text}'`);
+    this.#log(`Text of the element: '${text}'`);
     return text;
   }
 
+  async isSelected() {
+    const state = await this.#actionOnElement(
+      (el) => el.isSelected(),
+      "Checking if element is selected"
+    );
+    this.#log(`Selected state: ${state}`);
+    return state;
+  }
+
   async setValue(text) {
-    await this.#actionOnElement(async (el) => {
-      await el.setValue(text);
-    }, `Typing '${text}'`);
+    await this.#actionOnElement((el) => el.setValue(text), `Typing '${text}'`);
   }
 
   async clear() {
-    await this.#actionOnElement(async (el) => {
-      await el.clearValue();
-    }, "Clearing");
+    await this.#actionOnElement((el) => el.clearValue(), "Clearing");
   }
 
   async getValue() {
     const el = await this.#getEl();
-    return await el.getValue();
+    return el.getValue();
   }
 
   async moveTo() {
@@ -50,35 +55,42 @@ class BaseElement {
   }
 
   async waitForExist(timeout = config.timeouts.medium) {
-    await this.#actionOnElement(async (el) => {
-      await el.waitForExist({ timeout });
-    }, "Waiting for element to exist");
+    await this.#actionOnElement(
+      (el) => el.waitForExist({ timeout }),
+      "Waiting for element to exist"
+    );
   }
 
   async waitForDisplayed(timeout = config.timeouts.medium) {
-    await this.#actionOnElement(async (el) => {
-      await el.waitForDisplayed({ timeout });
-    }, "Waiting for element to be displayed");
+    await this.#actionOnElement(
+      (el) => el.waitForDisplayed({ timeout }),
+      "Waiting for element to be displayed"
+    );
   }
 
   async waitForClickable(timeout = config.timeouts.medium) {
-    await this.#actionOnElement(async (el) => {
-      await el.waitForClickable({ timeout });
-    }, "Waiting for element to be clickable");
+    await this.#actionOnElement(
+      (el) => el.waitForClickable({ timeout }),
+      "Waiting for element to be clickable"
+    );
   }
 
   async #actionOnElement(action, message) {
-    const fullMessage = `${this.type} '${this.name}' :: ${message}`;
-    logger.info(fullMessage);
+    this.#log(message);
 
     const el = await this.#getEl();
-    return await action(el);
+    return action(el);
+  }
+
+  async #log(message) {
+    const fullMessage = `${this.type} '${this.name}' :: ${message}`;
+    logger.info(fullMessage);
   }
 
   async #getEl() {
     return typeof this.elementOrLocator === "string"
       ? $(this.elementOrLocator)
-      : await this.elementOrLocator;
+      : this.elementOrLocator;
   }
 
   async #clickWithFallback() {
