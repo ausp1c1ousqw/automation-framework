@@ -22,7 +22,7 @@ class BasePage {
   async verifyPageMainElement() {
     const actualText = await this.mainEl.getText();
 
-    await pageHelpers.assertTextsWithLogging(
+    await pageHelpers.assertWithLogging(
       actualText,
       this.expectedTextOfMainEl,
       `Verifying main element of the page: ${this.mainEl.name}`

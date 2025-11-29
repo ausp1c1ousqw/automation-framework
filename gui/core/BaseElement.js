@@ -51,8 +51,19 @@ class BaseElement {
   }
 
   async getValue() {
+    this._log(`Getting value`);
     const el = await this.#getReadyEl();
-    return el.getValue();
+    const value = await el.getValue();
+    this._log(`Value of the element: '${value}'`);
+    return value;
+  }
+
+  async getAttribute(attribute) {
+    this._log(`Getting attribute`);
+    const el = await this.#getReadyEl();
+    const value = await el.getAttribute(attribute);
+    this._log(`Attribute of the element: '${value}'`);
+    return value;
   }
 
   async moveTo() {

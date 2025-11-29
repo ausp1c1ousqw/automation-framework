@@ -1,11 +1,11 @@
 import { expect } from "chai";
 import { logger } from "automation-framework/di-container";
 
-export async function assertTextsWithLogging(actualText, expectedText, message) {
+export async function assertWithLogging(actual, expected, message) {
   const fullMessage = `${message}
-Actual: '${actualText}' 
-Expected: '${expectedText}'`;
+Actual: '${actual}' 
+Expected: '${expected}'`;
 
   logger.info(fullMessage);
-  expect(actualText).to.equal(expectedText);
+  expect(actual).to.equal(expected, message);
 }
