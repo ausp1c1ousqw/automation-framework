@@ -77,11 +77,11 @@ class BaseElement {
   }
 
   async getCssValue(property, path) {
-    this._log(`Getting CSS value: ${path} of property: ${property}`);
+    this._log(`Getting CSS value: '${path}' of property: '${property}'`);
     const el = await this.#getReadyEl();
-    const cssProperty = await el.getCssProperty(property);
+    const cssProperty = await el.getCSSProperty(property);
     const value = get(cssProperty, path);
-    this._log(`CSS value: ${value}`);
+    this._log(`CSS value: '${value}'`);
     return value;
   }
 
