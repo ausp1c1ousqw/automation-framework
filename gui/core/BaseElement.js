@@ -1,4 +1,5 @@
 import { logger, config } from "automation-framework/di-container";
+import { get } from "lodash-es";
 
 class BaseElement {
   constructor(elementOrLocator, name, type) {
@@ -73,6 +74,14 @@ class BaseElement {
     await browser.execute((element) => {
       element.dispatchEvent(new MouseEvent("mouseover", { bubbles: true, cancelable: true }));
     }, el);
+  }
+
+  async getCssValue(property, path) {
+    this._log(`Getting CSS value: ${path} of property: ${property}`);
+    const cssProperty = await this.getCssProperty(property);
+    const value = get(cssProperty, path);
+    this._log(`CSS value: ${value}`);
+    return value;
   }
 
   async #getReadyEl(timeout = config.timeouts.medium) {
