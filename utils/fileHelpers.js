@@ -33,3 +33,12 @@ export function createLogFile() {
 
   return logFilePath;
 }
+
+export function createAllureEnvFile(envObject) {
+  const allureResultsDir = ensureDirExists(`${config.debugDir}/allure-results`);
+  const envFilePath = path.join(allureResultsDir, "environment.properties");
+  const envProps = Object.entries(envObject)
+    .map(([key, value]) => `${key}=${value}`)
+    .join("\n");
+  fs.writeFileSync(envFilePath, envProps);
+}
