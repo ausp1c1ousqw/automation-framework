@@ -1,3 +1,5 @@
+import { expect } from "chai";
+
 export const devToolsUtils = {
   networkResponses: [],
   activeRequests: new Set(),
@@ -32,5 +34,13 @@ export const devToolsUtils = {
       timeout,
       interval: 50,
     });
+  },
+
+  async assertNoConsoleErrors() {
+    const logs = await browser.getLogs("browser");
+
+    const errors = logs.filter((log) => log.level === "SEVERE" || log.level === "ERROR");
+
+    expect(errors, `Console errors found:\n${JSON.stringify(errors, null, 2)}`).to.be.empty;
   },
 };
