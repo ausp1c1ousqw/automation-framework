@@ -1,34 +1,31 @@
 import { devToolsUtils } from "./devTools.js";
 
 describe("devToolsUtils", () => {
-  let mockBrowser;
+  let mockClient;
 
   beforeEach(() => {
     devToolsUtils.networkResponses = [];
     devToolsUtils.activeRequests.clear();
     devToolsUtils.consoleLogs = [];
 
-    mockBrowser = {
-      cdp: jest.fn().mockResolvedValue(null),
+    mockClient = {
+      send: jest.fn().mockResolvedValue(null),
       on: jest.fn(),
-      waitUntil: jest.fn().mockResolvedValue(null),
-      getLogs: jest.fn(),
     };
-
-    global.browser = mockBrowser;
   });
 
   afterEach(() => {
     jest.clearAllMocks();
   });
 
-  test("enableNetworkMonitoring очищает данные и вызывает browser.cdp", async () => {
-    await devToolsUtils.enableNetworkMonitoring();
+  test("enableNetworkMonitoring очищает данные и вызывает client.send", async () => {
+    await devToolsUtils.enableNetworkMonitoring(mockClient);
 
     expect(devToolsUtils.networkResponses).toEqual([]);
     expect(devToolsUtils.activeRequests.size).toBe(0);
-    expect(mockBrowser.cdp).toHaveBeenCalledWith("Network", "enable");
-    expect(mockBrowser.on).toHaveBeenCalledTimes(2); // для request и response
+    expect(mockClient.send).toHaveBeenCalledWith("Network.enable");
+    expect(mockClient.send).toHaveBeenCalledWith("Runtime.enable");
+    expect(mockClient.on).toHaveBeenCalledTimes(3);
   });
 
   test("getNetworkResponses фильтрует по URL", () => {
@@ -42,25 +39,28 @@ describe("devToolsUtils", () => {
   });
 
   test("waitForNetworkIdle вызывает browser.waitUntil", async () => {
+    global.browser = { waitUntil: jest.fn().mockResolvedValue(null) };
+
     await devToolsUtils.waitForNetworkIdle(5000);
-    expect(mockBrowser.waitUntil).toHaveBeenCalledWith(expect.any(Function), {
+
+    expect(browser.waitUntil).toHaveBeenCalledWith(expect.any(Function), {
       timeout: 5000,
       interval: 50,
     });
   });
 
-  test("Network.requestWillBeSent и responseReceived работают корректно", async () => {
-    const requestCallbacks = {};
-    mockBrowser.on.mockImplementation((event, cb) => {
-      requestCallbacks[event] = cb;
+  test("Network.requestWillBeSent и responseReceived обновляют состояние", async () => {
+    const callbacks = {};
+    mockClient.on.mockImplementation((event, cb) => {
+      callbacks[event] = cb;
     });
 
-    await devToolsUtils.enableNetworkMonitoring();
+    await devToolsUtils.enableNetworkMonitoring(mockClient);
 
-    requestCallbacks["Network.requestWillBeSent"]({ requestId: "1" });
+    callbacks["Network.requestWillBeSent"]({ requestId: "1" });
     expect(devToolsUtils.activeRequests.has("1")).toBe(true);
 
-    requestCallbacks["Network.responseReceived"]({
+    callbacks["Network.responseReceived"]({
       requestId: "1",
       response: { url: "https://site.com/api", status: 200 },
       type: "xhr",
@@ -71,9 +71,31 @@ describe("devToolsUtils", () => {
     ]);
   });
 
-  test("assertNoConsoleErrors fails when ERROR or SEVERE logs exist", async () => {
-    browser.getLogs.mockResolvedValue([{ level: "ERROR", message: "boom" }]);
+  test("Runtime.consoleAPICalled сохраняет логи", async () => {
+    const callbacks = {};
+    mockClient.on.mockImplementation((event, cb) => {
+      callbacks[event] = cb;
+    });
 
-    await expect(devToolsUtils.assertNoConsoleErrors()).rejects.toThrow("boom");
+    await devToolsUtils.enableNetworkMonitoring(mockClient);
+
+    const logMsg = { type: "log", message: "test" };
+    callbacks["Runtime.consoleAPICalled"](logMsg);
+    expect(devToolsUtils.consoleLogs).toEqual([logMsg]);
+  });
+
+  test("assertNoConsoleErrors выбрасывает ошибку при логах с ошибкой", () => {
+    devToolsUtils.consoleLogs = [
+      { type: "error", message: "boom" },
+      { type: "log", message: "ok" },
+    ];
+
+    expect(() => devToolsUtils.assertNoConsoleErrors()).toThrow(/Console errors found/);
+  });
+
+  test("assertNoConsoleErrors проходит без ошибок, если логов нет", () => {
+    devToolsUtils.consoleLogs = [{ type: "log", message: "ok" }];
+
+    expect(() => devToolsUtils.assertNoConsoleErrors()).not.toThrow();
   });
 });

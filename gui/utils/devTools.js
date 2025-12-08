@@ -1,27 +1,37 @@
-import { expect } from "chai";
+export async function getPuppeteerClient() {
+  const puppeteerPage = await browser.getPuppeteer();
+  return await puppeteerPage.target().createCDPSession();
+}
 
 export const devToolsUtils = {
   networkResponses: [],
   activeRequests: new Set(),
   consoleLogs: [],
 
-  async enableNetworkMonitoring() {
+  async enableNetworkMonitoring(client) {
     this.networkResponses = [];
     this.activeRequests.clear();
 
-    await browser.cdp("Network", "enable");
+    const cdpClient = client || (await getPuppeteerClient());
 
-    browser.on("Network.requestWillBeSent", (params) => {
+    await cdpClient.send("Network.enable");
+    await cdpClient.send("Runtime.enable");
+
+    cdpClient.on("Network.requestWillBeSent", (params) => {
       this.activeRequests.add(params.requestId);
     });
 
-    browser.on("Network.responseReceived", (params) => {
+    cdpClient.on("Network.responseReceived", (params) => {
       this.networkResponses.push({
         url: params.response.url,
         status: params.response.status,
         type: params.type,
       });
       this.activeRequests.delete(params.requestId);
+    });
+
+    cdpClient.on("Runtime.consoleAPICalled", (msg) => {
+      this.consoleLogs.push(msg);
     });
   },
 
@@ -36,11 +46,12 @@ export const devToolsUtils = {
     });
   },
 
-  async assertNoConsoleErrors() {
-    const logs = await browser.getLogs("browser");
-
-    const errors = logs.filter((log) => log.level === "SEVERE" || log.level === "ERROR");
-
-    expect(errors, `Console errors found:\n${JSON.stringify(errors, null, 2)}`).to.be.empty;
+  assertNoConsoleErrors() {
+    const errors = this.consoleLogs.filter(
+      (log) => log.type?.toLowerCase() === "error" || log.level?.toLowerCase() === "error"
+    );
+    if (errors.length > 0) {
+      throw new Error(`Console errors found:\n${JSON.stringify(errors, null, 2)}`);
+    }
   },
 };
