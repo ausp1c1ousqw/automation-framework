@@ -11,7 +11,8 @@ export const devToolsUtils = {
   consoleLogs: [],
 
   async enableNetworkMonitoring(page) {
-    const puppeteerPage = page || (await getPuppeteerPage());
+    await browser.url("https://magento2demo.firebearstudio.com/");
+    const puppeteerPage = await browser.getPuppeteer();
 
     this.networkResponses = [];
     this.activeRequests.clear();
