@@ -1,6 +1,8 @@
-export async function getPuppeteerClient() {
-  const puppeteerPage = await browser.getPuppeteer();
-  return await puppeteerPage.target().createCDPSession();
+import { expect } from "chai";
+
+export async function getPuppeteerPage() {
+  // В WDIO v9 browser.getPuppeteer() возвращает Puppeteer Page через BiDi
+  return await browser.getPuppeteer();
 }
 
 export const devToolsUtils = {
@@ -8,31 +10,35 @@ export const devToolsUtils = {
   activeRequests: new Set(),
   consoleLogs: [],
 
-  async enableNetworkMonitoring(client) {
+  async enableNetworkMonitoring(page) {
+    const puppeteerPage = page || (await getPuppeteerPage());
+
     this.networkResponses = [];
     this.activeRequests.clear();
+    this.consoleLogs = [];
 
-    const cdpClient = client || (await getPuppeteerClient());
-
-    await cdpClient.send("Network.enable");
-    await cdpClient.send("Runtime.enable");
-
-    cdpClient.on("Network.requestWillBeSent", (params) => {
-      this.activeRequests.add(params.requestId);
+    // Сетевые события
+    puppeteerPage.on("request", (request) => {
+      this.activeRequests.add(request._requestId || request.url());
     });
 
-    cdpClient.on("Network.responseReceived", (params) => {
-      this.networkResponses.push({
-        url: params.response.url,
-        status: params.response.status,
-        type: params.type,
-      });
-      this.activeRequests.delete(params.requestId);
+    puppeteerPage.on("response", async (response) => {
+      const requestId = response._requestId || response.url();
+      this.activeRequests.delete(requestId);
+
+      const url = response.url();
+      const status = response.status();
+      const type = response.request().resourceType();
+
+      this.networkResponses.push({ url, status, type });
     });
 
-    cdpClient.on("Runtime.consoleAPICalled", (msg) => {
+    // Логи консоли
+    puppeteerPage.on("console", (msg) => {
       this.consoleLogs.push(msg);
     });
+
+    return puppeteerPage;
   },
 
   getNetworkResponses(filter = "") {
@@ -40,36 +46,34 @@ export const devToolsUtils = {
   },
 
   async waitForNetworkIdle(timeout = 3000) {
-    await browser.waitUntil(() => this.activeRequests.size === 0, {
-      timeout,
-      interval: 50,
-    });
+    const start = Date.now();
+    while (this.activeRequests.size > 0 && Date.now() - start < timeout) {
+      await new Promise((r) => setTimeout(r, 50));
+    }
   },
 
   assertNoConsoleErrors() {
     const errors = this.consoleLogs.filter(
       (log) => log.type?.toLowerCase() === "error" || log.level?.toLowerCase() === "error"
     );
+
     if (errors.length > 0) {
       throw new Error(`Console errors found:\n${JSON.stringify(errors, null, 2)}`);
     }
   },
 
-  async getPerformanceMetricsMs(client) {
-    const cdpClient = client || (await getPuppeteerClient());
-    const perfMetrics = await cdpClient.send("Performance.getMetrics");
-
+  async getPerformanceMetricsMs(page) {
+    const puppeteerPage = page || (await getPuppeteerPage());
+    const perf = await puppeteerPage.metrics(); // Puppeteer BiDi metrics
     const metrics = {};
-    for (const item of perfMetrics.metrics) {
-      metrics[item.name] = item.value * 1000;
+    for (const [key, value] of Object.entries(perf)) {
+      metrics[key] = value * 1000; // перевод в миллисекунды
     }
-
     return metrics;
   },
 
-  async checkFirstMeaningfulPaint() {
-    const metrics = await this.getPerformanceMetricsMs();
-
+  async checkFirstMeaningfulPaint(page) {
+    const metrics = await this.getPerformanceMetricsMs(page);
     expect(metrics.FirstMeaningfulPaint).to.be.lessThan(2000);
   },
 };
