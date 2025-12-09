@@ -54,4 +54,22 @@ export const devToolsUtils = {
       throw new Error(`Console errors found:\n${JSON.stringify(errors, null, 2)}`);
     }
   },
+
+  async getPerformanceMetricsMs(client) {
+    const cdpClient = client || (await getPuppeteerClient());
+    const perfMetrics = await cdpClient.send("Performance.getMetrics");
+
+    const metrics = {};
+    for (const item of perfMetrics.metrics) {
+      metrics[item.name] = item.value * 1000;
+    }
+
+    return metrics;
+  },
+
+  async checkFirstMeaningfulPaint() {
+    const metrics = await this.getPerformanceMetricsMs();
+
+    expect(metrics.FirstMeaningfulPaint).to.be.lessThan(2000);
+  },
 };
