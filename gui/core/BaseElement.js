@@ -86,13 +86,13 @@ class BaseElement {
   }
 
   async #getReadyEl(timeout = config.timeouts.medium) {
-    const el = await this.#getEl();
+    const el = await this._getEl();
     await el.waitForExist({ timeout });
     await el.waitForDisplayed({ timeout });
     return el;
   }
 
-  async #getEl() {
+  async _getEl() {
     return typeof this.elementOrLocator === "string"
       ? $(this.elementOrLocator)
       : this.elementOrLocator;

@@ -8,5 +8,11 @@ class Input extends BaseElement {
     await this.clear();
     await this.setValue(text);
   }
+  async uploadFile(filePath) {
+    this._log(`Uploading file: '${filePath}'`);
+    const el = await this._getEl();
+    await el.waitForExist({ timeout });
+    await el.setValue(filePath);
+  }
 }
 export default Input;
