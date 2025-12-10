@@ -1,4 +1,5 @@
 import BaseElement from "../BaseElement.js";
+import { config } from "automation-framework/di-container";
 
 class Input extends BaseElement {
   constructor(elementOrLocator, name) {
@@ -11,7 +12,8 @@ class Input extends BaseElement {
   async uploadFile(filePath) {
     this._log(`Uploading file: '${filePath}'`);
     const el = await this._getEl();
-    await el.waitForExist({ timeout });
+
+    await el.waitForExist({ timeout: config.timeouts.medium });
     await el.setValue(filePath);
   }
 }
