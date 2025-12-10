@@ -14,7 +14,8 @@ class Input extends BaseElement {
     const el = await this._getEl();
 
     await el.waitForExist({ timeout: config.timeouts.medium });
-    await el.setValue(filePath);
+    const file = await browser.uploadFile(filePath);
+    await el.setValue(file);
   }
 }
 export default Input;
