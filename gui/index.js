@@ -5,5 +5,8 @@ export { default as Label } from "./core/elements/Label.js";
 export { default as Link } from "./core/elements/Link.js";
 export { default as Dropdown } from "./core/elements/Dropdown.js";
 export { default as BasePage } from "./core/BasePage.js";
+export { default as BaseElement } from "./core/BaseElement.js";
+export { default as Frame } from "./core/elements/Frame.js";
+export { default as alert } from "./core/Alert.js";
 export { devToolsUtils } from "./utils/devTools.js";
 export * as pageHelpers from "./core/pageHelpers.js";
